@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { silver, gold } from "./day-01.ts";
+import { silver, gold } from "./solution.ts";
 import { describe } from "node:test";
 
 describe("December 01", () => {

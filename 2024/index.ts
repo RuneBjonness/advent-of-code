@@ -1,6 +1,7 @@
-import { day01 } from "./day-01";
+import { day01 } from "./day-01/solution";
+import { day02 } from "./day-02/solution";
 
-const dayEntries = [day01];
+const dayEntries = [day01, day02];
 
 const parseDay = (day: string): number => {
   const dayNumber = Number(day);
