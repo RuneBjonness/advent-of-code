@@ -1,0 +1,19 @@
+{
+  "name": "aoc2024",
+  "version": "1.0.0",
+  "description": "Advent of code 2024",
+  "main": "index.ts",
+  "scripts": {
+    "start": "vite-node index.ts",
+    "test": "vitest"
+  },
+  "author": "Rune Bjønness",
+  "license": "ISC",
+  "dependencies": {
+    "vite-node": "^2.1.6"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "vitest": "^2.1.6"
+  }
+}
