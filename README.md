@@ -6,7 +6,7 @@ Advent of code solutions
 
 Solutions in TypeScript.
 
-```bash
+```ps
 npm start [dayNumber <1-25>] [optional partFilter <silver | gold>]
 
 npm start 1
