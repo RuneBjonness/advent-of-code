@@ -1,5 +1,5 @@
 import { DayEntry } from "../aoc-day-entry";
-import { input as day00input } from "./input";
+import { input } from "./input";
 
 export const silver = (input: string): number => {
   return Number(input);
@@ -10,6 +10,6 @@ export const gold = (input: string): number => {
 };
 
 export const day02: DayEntry = {
-  silver: () => silver(day00input),
-  gold: () => gold(day00input),
+  silver: () => silver(input),
+  gold: () => gold(input),
 };

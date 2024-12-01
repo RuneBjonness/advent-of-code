@@ -2,12 +2,14 @@ import { expect, test } from "vitest";
 import { silver, gold } from "./solution.ts";
 import { describe } from "node:test";
 
+const testInput = `123`;
+
 describe("December 00 (template)", () => {
   test("silver", () => {
-    expect(silver("123")).toBe(123);
+    expect(silver(testInput)).toBe(123);
   });
 
   test("gold", () => {
-    expect(gold("123")).toBe(246);
+    expect(gold(testInput)).toBe(246);
   });
 });
