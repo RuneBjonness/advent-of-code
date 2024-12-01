@@ -2,7 +2,7 @@
 
 Advent of code solutions
 
-## 2024
+## 2023 & 2024
 
 Solutions in TypeScript.
 
