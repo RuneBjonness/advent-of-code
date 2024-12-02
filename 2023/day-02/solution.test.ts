@@ -1,6 +1,6 @@
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { silver, gold } from "./solution.ts";
-import { describe } from "node:test";
+import { input } from "./input.ts";
 
 const testInput = `Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
@@ -9,11 +9,19 @@ Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`;
 
 describe("December 02", () => {
-  test("silver", () => {
+  test("silver - test input", () => {
     expect(silver(testInput)).toBe(8);
   });
 
-  test("gold", () => {
+  test("silver - actual puzzle input", () => {
+    expect(silver(input)).toBe(3059);
+  });
+
+  test("gold - test input", () => {
     expect(gold(testInput)).toBe(2286);
+  });
+
+  test("gold - actual puzzle input", () => {
+    expect(gold(input)).toBe(65371);
   });
 });

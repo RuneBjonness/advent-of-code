@@ -1,6 +1,5 @@
-import { expect, test } from "vitest";
+import { expect, test, describe } from "vitest";
 import { silver, gold } from "./solution.ts";
-import { describe } from "node:test";
 import { input } from "./input.ts";
 
 const testInput = `7 6 4 2 1
