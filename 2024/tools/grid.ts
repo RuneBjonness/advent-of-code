@@ -24,6 +24,27 @@ export const directions: Direction[] = [
   "leftUp",
 ];
 
+export const rotate90 = (dir: Direction): Direction => {
+  switch (dir) {
+    case "right":
+      return "down";
+    case "down":
+      return "left";
+    case "left":
+      return "up";
+    case "up":
+      return "right";
+    case "rightDown":
+      return "leftDown";
+    case "leftDown":
+      return "leftUp";
+    case "leftUp":
+      return "rightUp";
+    case "rightUp":
+      return "rightDown";
+  }
+};
+
 export const directionVector = (dir: Direction, length = 1): GridPosition => {
   switch (dir) {
     case "right":
@@ -45,8 +66,10 @@ export const directionVector = (dir: Direction, length = 1): GridPosition => {
   }
 };
 
-export const cell = <T>(grid: T[][], position: GridPosition): T => {
-  return grid[position.row][position.col];
+export const cell = <T>(grid: T[][], position: GridPosition): T | null => {
+  return isValidPosition(grid, position)
+    ? grid[position.row][position.col]
+    : null;
 };
 
 export const cells = <T>(
@@ -58,9 +81,7 @@ export const cells = <T>(
   const positions = Array.from({ length }, (_, i) =>
     shiftPosition(pos, dir, i)
   );
-  return positions
-    .filter((p) => isValidPosition(grid, p))
-    .map((p) => cell(grid, p));
+  return positions.map((p) => cell(grid, p)).filter((c) => c !== null);
 };
 
 export const isValidPosition = <T>(grid: T[][], pos: GridPosition): boolean => {
