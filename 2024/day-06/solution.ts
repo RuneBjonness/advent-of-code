@@ -1,4 +1,4 @@
-import { DayEntry } from "../aoc-day-entry";
+import { AocPuzzle } from "../aoc-puzzle";
 import {
   cell,
   Direction,
@@ -74,6 +74,8 @@ export const gold = (input: string): number => {
   return count;
 };
 
+export const day06 = new AocPuzzle(2024, 6, silver, gold, input);
+
 type PathStep = {
   pos: GridPosition;
   dir: Direction;
@@ -101,9 +103,4 @@ const isLooping = (
     }
   }
   return false;
-};
-
-export const day06: DayEntry = {
-  silver: () => silver(input),
-  gold: () => gold(input),
 };

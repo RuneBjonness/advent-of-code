@@ -1,4 +1,4 @@
-import { DayEntry } from "../aoc-day-entry";
+import { AocPuzzle } from "../aoc-puzzle";
 import { input } from "./input";
 
 export const silver = (input: string): number => {
@@ -17,6 +17,8 @@ export const gold = (input: string): number => {
     0
   );
 };
+
+export const day01 = new AocPuzzle(2024, 1, silver, gold, input);
 
 type ListPair = {
   list1: number[];
@@ -38,9 +40,4 @@ const getListPair = (input: string): ListPair => {
 
 const occurencesInList = (list: number[], value: number): number => {
   return list.filter((n) => n === value).length;
-};
-
-export const day01: DayEntry = {
-  silver: () => silver(input),
-  gold: () => gold(input),
 };

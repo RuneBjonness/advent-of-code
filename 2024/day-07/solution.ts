@@ -1,4 +1,4 @@
-import { DayEntry } from "../aoc-day-entry";
+import { AocPuzzle } from "../aoc-puzzle";
 import { input } from "./input";
 
 export const silver = (input: string): number => {
@@ -8,6 +8,8 @@ export const silver = (input: string): number => {
 export const gold = (input: string): number => {
   return totalCalibrationResult(input, [add, multiply, concatinate]);
 };
+
+export const day07 = new AocPuzzle(2024, 7, silver, gold, input);
 
 type Operation = (a: number, b: number) => number;
 const add: Operation = (a, b) => a + b;
@@ -70,9 +72,4 @@ const isEquationSolvable = (
       target
     );
   });
-};
-
-export const day07: DayEntry = {
-  silver: () => silver(input),
-  gold: () => gold(input),
 };

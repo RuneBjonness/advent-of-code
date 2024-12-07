@@ -1,4 +1,4 @@
-import { DayEntry } from "../aoc-day-entry";
+import { AocPuzzle } from "../aoc-puzzle";
 import { input } from "./input";
 
 export const silver = (input: string): number => {
@@ -29,6 +29,8 @@ export const gold = (input: string): number => {
 
   return safeCount;
 };
+
+export const day02 = new AocPuzzle(2024, 2, silver, gold, input);
 
 type Trend = "increasing" | "decreasing" | "constant";
 
@@ -73,9 +75,4 @@ const unsafeLevelIndex = (
     }
   }
   return -1;
-};
-
-export const day02: DayEntry = {
-  silver: () => silver(input),
-  gold: () => gold(input),
 };
