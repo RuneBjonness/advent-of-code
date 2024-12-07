@@ -58,7 +58,6 @@ export const gold = (input: string): number => {
   }
 
   let count = 0;
-
   for (let i = 0; i < path.length; i++) {
     const testGrid = grid.map((row) => [...row]);
     testGrid[path[i].row][path[i].col] = "#";
@@ -77,22 +76,21 @@ const isLooping = (
   dir: Direction
 ): boolean => {
   let pos = { ...position };
-  let safetyCounter = 7000;
-  while (isValidPosition(grid, pos) && safetyCounter > 0) {
+  while (isValidPosition(grid, pos)) {
+    if (cell(grid, pos)?.includes(dir)) {
+      return true;
+    }
+
     const nextPos = shiftPosition(pos, dir);
+
     if (cell(grid, nextPos) === "#") {
       dir = rotate90(dir);
-      if (cell(grid, shiftPosition(pos, dir))?.includes(dir)) {
-        return true;
-      }
     } else {
       grid[pos.row][pos.col] += dir;
       pos = nextPos;
     }
-    safetyCounter--;
   }
-
-  return safetyCounter <= 0;
+  return false;
 };
 
 export const day06: DayEntry = {
