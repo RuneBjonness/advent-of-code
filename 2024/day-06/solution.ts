@@ -39,35 +39,45 @@ export const gold = (input: string): number => {
   pos.col = grid[pos.row].indexOf("^");
 
   const originalPos = { ...pos };
-  const path: GridPosition[] = [];
+  const path: PathStep[] = [];
 
   while (isValidPosition(grid, pos)) {
     const nextPos = shiftPosition(pos, dir);
     if (cell(grid, nextPos) === "#") {
       dir = rotate90(dir);
     } else {
-      if (
-        (pos.col !== originalPos.col || pos.row !== originalPos.row) &&
-        !path.some((p) => p.row === pos.row && p.col === pos.col)
-      ) {
-        path.push({ ...pos });
-      }
-
+      path.push({
+        pos: { ...pos },
+        dir,
+        possibleBlockLocation:
+          (pos.col !== originalPos.col || pos.row !== originalPos.row) &&
+          !path.some((p) => p.pos.row === pos.row && p.pos.col === pos.col),
+      });
       pos = nextPos;
     }
   }
 
   let count = 0;
   for (let i = 0; i < path.length; i++) {
-    const testGrid = grid.map((row) => [...row]);
-    testGrid[path[i].row][path[i].col] = "#";
+    if (path[i].possibleBlockLocation) {
+      const testGrid = grid.map((row) => [...row]);
+      testGrid[path[i - 1].pos.row][path[i - 1].pos.col] = ".";
+      testGrid[path[i].pos.row][path[i].pos.col] = "#";
 
-    if (isLooping(testGrid, originalPos, "up")) {
-      count++;
+      if (isLooping(testGrid, path[i - 1].pos, path[i - 1].dir)) {
+        count++;
+      }
     }
+    grid[path[i].pos.row][path[i].pos.col] += path[i].dir;
   }
 
   return count;
+};
+
+type PathStep = {
+  pos: GridPosition;
+  dir: Direction;
+  possibleBlockLocation: boolean;
 };
 
 const isLooping = (
