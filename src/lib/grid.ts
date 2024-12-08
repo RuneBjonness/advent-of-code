@@ -101,3 +101,16 @@ export const shiftPosition = (
   const vector = directionVector(direction, steps);
   return { row: origin.row + vector.row, col: origin.col + vector.col };
 };
+
+export const getPositions = <T>(
+  grid: T[][],
+  filter: (val: T) => boolean
+): GridPosition[] => {
+  return grid
+    .flatMap((row, rowIndex) =>
+      row.map((cell, colIndex) =>
+        filter(cell) ? { row: rowIndex, col: colIndex } : null
+      )
+    )
+    .filter((pos) => pos !== null);
+};
