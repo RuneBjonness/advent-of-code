@@ -5,7 +5,8 @@
   "main": "./src/index.ts",
   "scripts": {
     "start": "vite-node ./src/index.ts",
-    "test": "vitest --ui"
+    "test": "vitest --ui",
+    "bench": "vitest bench"
   },
   "author": "Rune Bjønness",
   "license": "ISC",
