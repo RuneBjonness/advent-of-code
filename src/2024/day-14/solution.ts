@@ -7,36 +7,32 @@ export const silver = (input: string): number => {
 };
 
 export const gold = (input: string): number => {
-  return NaN;
+  return secondsToChristmasTree(input, 101, 103);
 };
 
 export const day14 = new AocPuzzle(2024, 14, silver, gold, input);
 
 type Robot = { pos: Vec2; vel: Vec2 };
 
-export const safetyFactor = (
-  input: string,
-  width: number,
-  height: number
-): number => {
-  const robots: Robot[] = input.split("\n").map((line) => {
+export const parseInput = (input: string): Robot[] => {
+  return input.split("\n").map((line) => {
     const matches = line.match(/p=(.+),(.+) v=(.+),(.+)/)!.slice(1);
     return {
       pos: vec2(Number(matches[0]), Number(matches[1])),
       vel: vec2(Number(matches[2]), Number(matches[3])),
     };
   });
+};
+
+export const safetyFactor = (
+  input: string,
+  width: number,
+  height: number
+): number => {
+  const robots = parseInput(input);
 
   robots.forEach((robot) => {
-    let x = (robot.pos.x + robot.vel.x * 100) % width;
-    if (x < 0) {
-      x += width;
-    }
-    let y = (robot.pos.y + robot.vel.y * 100) % height;
-    if (y < 0) {
-      y += height;
-    }
-    robot.pos = vec2(x, y);
+    robot.pos = getPosition(robot, width, height, 100);
   });
 
   const halfWidth = (width - 1) / 2;
@@ -56,4 +52,69 @@ export const safetyFactor = (
   ).length;
 
   return q1 * q2 * q3 * q4;
+};
+
+const getPosition = (
+  robot: Robot,
+  width: number,
+  height: number,
+  seconds = 1
+): Vec2 => {
+  let x = (robot.pos.x + robot.vel.x * seconds) % width;
+  if (x < 0) {
+    x += width;
+  }
+  let y = (robot.pos.y + robot.vel.y * seconds) % height;
+  if (y < 0) {
+    y += height;
+  }
+  return vec2(x, y);
+};
+
+const secondsToChristmasTree = (
+  input: string,
+  width: number,
+  height: number
+): number => {
+  const robots = parseInput(input);
+
+  let seconds = 0;
+  while (seconds < 10000) {
+    seconds++;
+    robots.forEach((robot) => {
+      robot.pos = getPosition(robot, width, height);
+    });
+
+    const grid = Array.from({ length: height }, () =>
+      Array.from({ length: width }, () => ".")
+    );
+
+    robots.forEach((robot) => {
+      grid[robot.pos.y][robot.pos.x] = "#";
+    });
+
+    if (
+      grid
+        .flatMap((row) => row)
+        .join("")
+        .includes("##########")
+    ) {
+      // log(robots, width, height);
+      return seconds;
+    }
+  }
+  return -1;
+};
+
+const log = (robots: Robot[], width: number, height: number) => {
+  const grid = Array.from({ length: height }, () =>
+    Array.from({ length: width }, () => ".")
+  );
+
+  robots.forEach((robot) => {
+    grid[robot.pos.y][robot.pos.x] = "#";
+  });
+
+  console.log(grid.map((row) => row.join("")).join("\n"));
+  console.log();
 };
