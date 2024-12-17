@@ -27,11 +27,7 @@ describe("December 13", () => {
     expect(silver(input)).toBe(26810);
   });
 
-  // test("gold - test input", () => {
-  //   expect(gold(testInput)).toBe(246);
-  // });
-
-  // test("gold - actual puzzle input", () => {
-  //   expect(gold(input)).toBe(22222);
-  // });
+  test("gold - actual puzzle input", () => {
+    expect(gold(input)).toBe(108713182988244);
+  });
 });
