@@ -12,6 +12,7 @@ import { day11 } from "./day-11/solution";
 import { day12 } from "./day-12/solution";
 import { day13 } from "./day-13/solution";
 import { day14 } from "./day-14/solution";
+import { day15 } from "./day-15/solution";
 
 export const puzzles2024 = [
   day01,
@@ -28,4 +29,5 @@ export const puzzles2024 = [
   day12,
   day13,
   day14,
+  day15,
 ];
