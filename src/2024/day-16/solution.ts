@@ -96,7 +96,7 @@ export const gold = (input: string): number => {
   return getPositions(maze, (x) => x.type === "O").length;
 };
 
-export const day16 = new AocPuzzle(2024, 15, silver, gold, input);
+export const day16 = new AocPuzzle(2024, 16, silver, gold, input);
 
 type MazeCell = {
   type: string;
