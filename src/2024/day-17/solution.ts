@@ -1,7 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
 import { input } from "./input";
 
-export const silver = (input: string): number => {
+export const silver = (input: string): string => {
   const lines = input.split("\n");
   const registers: Register = {
     a: Number(lines[0].split(": ")[1]),
@@ -11,7 +11,7 @@ export const silver = (input: string): number => {
   let program = lines[4].substring(9).split(",").map(Number);
   const out = runProgram(program, registers);
 
-  return Number(out.join(""));
+  return out.join(",");
 };
 
 export const gold = (input: string): number => {
@@ -40,7 +40,7 @@ export const runProgram = (
   let pointer = 0;
   const out: number[] = [];
   while (pointer < program.length) {
-    console.log(pointer, program[pointer], registers, out.join(""));
+    // console.log(pointer, program[pointer], registers, out.join(""));
 
     const result = instructions[program[pointer]](
       program[pointer + 1],
@@ -76,9 +76,7 @@ const instructions: Instruction[] = [
     return null;
   },
   (operand, registers) => {
-    if (registers.a !== 0) {
-      return { out: null, pointer: operand };
-    }
+    return registers.a !== 0 ? { out: null, pointer: operand } : null;
   },
   (_, registers) => {
     registers.b = registers.b ^ registers.c;

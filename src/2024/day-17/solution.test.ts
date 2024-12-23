@@ -51,8 +51,12 @@ describe("December 17", () => {
     expect(registers.b).toBe(44354);
   });
 
+  test("silver - test input", () => {
+    expect(silver(testInput)).toBe("4,6,3,5,6,3,5,2,1,0");
+  });
+
   test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(627231605);
+    expect(silver(input)).toBe("6,2,7,2,3,1,6,0,5");
   });
 
   test("gold - test input", () => {

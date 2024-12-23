@@ -4,8 +4,8 @@ export class AocPuzzle {
   constructor(
     public readonly year: number,
     public readonly day: number,
-    public readonly silver: (input: string) => number,
-    public readonly gold: (input: string) => number,
+    public readonly silver: (input: string) => number | string,
+    public readonly gold: (input: string) => number | string,
     public readonly input: string
   ) {}
 
