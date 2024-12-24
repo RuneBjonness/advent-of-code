@@ -114,3 +114,7 @@ export const getPositions = <T>(
     )
     .filter((pos) => pos !== null);
 };
+
+export const distance = (a: GridPosition, b: GridPosition): number => {
+  return Math.abs(a.col - b.col) + Math.abs(a.row - b.row);
+};
