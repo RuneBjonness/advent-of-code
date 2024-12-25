@@ -8,7 +8,9 @@ export const silver = (input: string): number => {
 };
 
 export const gold = (input: string): number => {
-  return Number(input) * 2;
+  return input.split("\n").reduce((acc, code) => {
+    return acc + shortestForCode(code, 25) * Number(code.slice(0, 3));
+  }, 0);
 };
 
 export const day21 = new AocPuzzle(2024, 21, silver, gold, input);
@@ -100,29 +102,48 @@ export const dirKeysForDirKeySequence = (
   return keys;
 };
 
-export const shortestForCode = (code: string): number => {
+export const shortestForCode = (code: string, robotChainLength = 2): number => {
+  const chache: Map<string, number> = new Map();
   return dirKeysForNumPadCode(code)
-    .map((keys1) =>
-      keys1
-        .map((key1) =>
-          dirKeysForDirKeySequence(key1)
-            .map((keys2) =>
-              keys2
-                .map((key2) =>
-                  dirKeysForDirKeySequence(key2)
-                    .map((keys3) =>
-                      keys3.reduce(
-                        (acc, key3) => Math.min(acc, key3.length),
-                        Infinity
-                      )
-                    )
-                    .reduce((acc, key3) => acc + key3, 0)
-                )
-                .reduce((acc, key2) => Math.min(acc, key2), Infinity)
-            )
-            .reduce((acc, key2) => acc + key2, 0)
-        )
-        .reduce((acc, key1) => Math.min(acc, key1), Infinity)
+    .map((x) =>
+      x.reduce(
+        (acc, key) =>
+          Math.min(acc, shortestForSequence(key, robotChainLength - 1, chache)),
+        Infinity
+      )
     )
-    .reduce((acc, keys) => acc + keys, 0);
+    .reduce((acc, key) => acc + key, 0);
+};
+
+export const shortestForSequence = (
+  sequence: string,
+  robotChainLength: number,
+  chache: Map<string, number>
+): number => {
+  const key = `${sequence}-${robotChainLength}`;
+  if (chache.has(key)) {
+    return chache.get(key)!;
+  }
+
+  let result = 0;
+  if (robotChainLength === 0) {
+    result = dirKeysForDirKeySequence(sequence)
+      .map((x) => x.reduce((acc, key) => Math.min(acc, key.length), Infinity))
+      .reduce((acc, key) => acc + key, 0);
+  } else {
+    result = dirKeysForDirKeySequence(sequence)
+      .map((x) =>
+        x.reduce(
+          (acc, key) =>
+            Math.min(
+              acc,
+              shortestForSequence(key, robotChainLength - 1, chache)
+            ),
+          Infinity
+        )
+      )
+      .reduce((acc, key) => acc + key, 0);
+  }
+  chache.set(key, result);
+  return result;
 };
