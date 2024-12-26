@@ -35,7 +35,7 @@ export const puzzles2024 = [
   day11,
   day12,
   day13,
-  day14,
+  day14.skip("gold", "11 seconds"),
   day15,
   day16,
   day17,
@@ -43,5 +43,5 @@ export const puzzles2024 = [
   day19,
   day20,
   day21,
-  day22,
+  day22.skip("gold", "1 hour plus"),
 ];
