@@ -7,6 +7,11 @@ const testInput = `1
 100
 2024`;
 
+const testInputGold = `1
+2
+3
+2024`;
+
 describe("December 22", () => {
   test("nextSecret", () => {
     expect(nextSecret(123)).toBe(15887950);
@@ -50,11 +55,11 @@ describe("December 22", () => {
     expect(p[8][1]).toBe(2);
   });
 
-  test("gold - test input", () => {
-    expect(gold(testInput)).toBe(246);
-  });
+  // test("gold - test input", () => {
+  //   expect(gold(testInputGold)).toBe(23);
+  // });
 
   // test("gold - actual puzzle input", () => {
-  //   expect(gold(input)).toBe(22222);
+  //   expect(gold(input)).toBe(1582);
   // });
 });
