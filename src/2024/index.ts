@@ -22,6 +22,7 @@ import { day21 } from "./day-21/solution";
 import { day22 } from "./day-22/solution";
 import { day23 } from "./day-23/solution";
 import { day24 } from "./day-24/solution";
+import { day25 } from "./day-25/solution";
 
 export const puzzles2024 = [
   day01,
@@ -48,4 +49,5 @@ export const puzzles2024 = [
   day22.skip("gold", "1 hour plus"),
   day23.skip("gold", "several minutes"),
   day24,
+  day25,
 ];
