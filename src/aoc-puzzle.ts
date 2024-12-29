@@ -42,7 +42,7 @@ export class AocPuzzle {
 
     const day = this.day.toString().padStart(2);
     const puzzlePart = part.padEnd(7);
-    const result = resultValue.toString().padStart(18);
+    const result = resultValue.toString().padStart(32);
     duration = duration.padStart(10);
 
     console.log(
