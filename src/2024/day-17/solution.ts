@@ -15,7 +15,52 @@ export const silver = (input: string): string => {
 };
 
 export const gold = (input: string): number => {
-  return NaN;
+  const lines = input.split("\n");
+  const registers: Register = {
+    a: Number(lines[0].split(": ")[1]),
+    b: Number(lines[1].split(": ")[1]),
+    c: Number(lines[2].split(": ")[1]),
+  };
+  const programString = lines[4].substring(9);
+  const program = programString.split(",").map(Number);
+
+  const base3digits: number[] = [];
+
+  let currentDigits = 0;
+  let pos = program.length - 1;
+  let b3Digit = 0;
+
+  while (pos >= 0 && pos < program.length) {
+    let found = false;
+    while (b3Digit < 8 && !found) {
+      registers.a = [...base3digits, b3Digit].reduce(
+        (acc, x, idx) => acc + x * Math.pow(8, currentDigits - idx),
+        0
+      );
+      const out = runProgram(program, registers).join(",");
+      if (out === programString.slice(pos * 2)) {
+        found = true;
+      } else {
+        b3Digit++;
+      }
+    }
+
+    if (found) {
+      base3digits.push(b3Digit);
+      b3Digit = 0;
+      currentDigits++;
+      pos--;
+    } else {
+      b3Digit = base3digits.pop() + 1;
+      currentDigits--;
+      pos++;
+    }
+  }
+
+  return base3digits.reduce(
+    (acc, bit, idx) => acc + bit * Math.pow(8, currentDigits - 1 - idx),
+    0
+  );
 };
 
 export const day17 = new AocPuzzle(2024, 17, silver, gold, input);
@@ -40,8 +85,6 @@ export const runProgram = (
   let pointer = 0;
   const out: number[] = [];
   while (pointer < program.length) {
-    // console.log(pointer, program[pointer], registers, out.join(""));
-
     const result = instructions[program[pointer]](
       program[pointer + 1],
       registers
@@ -68,7 +111,7 @@ const instructions: Instruction[] = [
     return null;
   },
   (operand, registers) => {
-    registers.b = registers.b ^ operand;
+    registers.b = (registers.b ^ operand) >>> 0;
     return null;
   },
   (operand, registers) => {
@@ -79,7 +122,7 @@ const instructions: Instruction[] = [
     return registers.a !== 0 ? { out: null, pointer: operand } : null;
   },
   (_, registers) => {
-    registers.b = registers.b ^ registers.c;
+    registers.b = (registers.b ^ registers.c) >>> 0;
     return null;
   },
   (operand, registers) => {
