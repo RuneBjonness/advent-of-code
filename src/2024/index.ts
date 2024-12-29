@@ -49,5 +49,5 @@ export const puzzles2024 = [
   day22.skip("gold", "1 hour plus"),
   day23.skip("gold", "several minutes"),
   day24,
-  day25,
+  day25.skip("gold", "There is no part 2"),
 ];
