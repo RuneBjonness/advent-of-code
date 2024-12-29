@@ -37,14 +37,10 @@ export const gold = (input: string): string => {
       nodes.get(key)!.filter((x) => x > key),
       nodes
     );
-    console.log("key:", key, "chain:", chain);
     if (chain.length > longest.length) {
       longest = chain;
-      console.log("-------new longest:", chain.join(","));
     }
   }
-
-  console.log("longest:", longest);
 
   return longest.join(",");
 };
