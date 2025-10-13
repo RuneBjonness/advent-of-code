@@ -1,6 +1,5 @@
-import { puzzles2023 } from "./2023";
-import { puzzles2024 } from "./2024";
 import { PuzzlePart } from "./aoc-puzzle";
+import { getPuzzles } from "./puzzle-collection";
 
 const parseYearFilter = (year?: string): number | null => {
   if (!year || year === "*") {
@@ -42,17 +41,7 @@ const year = parseYearFilter(process.argv[2]);
 const day = parseDayFilter(process.argv[3]);
 const part = parsePartFilter(process.argv[4]);
 
-const puzzles = puzzles2023.concat(puzzles2024).filter((puzzle) => {
-  if (year && puzzle.year !== year) {
-    return false;
-  }
-
-  if (day && puzzle.day !== day) {
-    return false;
-  }
-
-  return true;
-});
+const puzzles = getPuzzles(year, day);
 
 if (puzzles.length === 0) {
   console.log("No puzzles found");
