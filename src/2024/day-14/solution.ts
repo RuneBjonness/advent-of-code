@@ -76,10 +76,9 @@ const secondsToChristmasTree = (
   width: number,
   height: number
 ): number => {
-  const maxPossibleYposMatch = height - 33;
-  const maxPossibleXposMatch = width - 22;
-
   const robots = parseInput(input);
+
+  const halfWidth = (width - 1) / 2;
 
   let seconds = 0;
   while (seconds < 10000) {
@@ -88,37 +87,39 @@ const secondsToChristmasTree = (
       robot.pos = getPosition(robot, width, height);
     });
 
-    robots.sort((a, b) => a.pos.y - b.pos.y || a.pos.x - b.pos.x);
+    const leftHalfCount = robots.filter(
+      (robot) => robot.pos.x < halfWidth
+    ).length;
 
-    let count = 0;
-    let lastX = -1;
-    let lastY = 0;
+    if (
+      leftHalfCount > robots.length * 0.8 ||
+      leftHalfCount < robots.length * 0.2
+    ) {
+      robots.sort((a, b) => a.pos.y - b.pos.y || a.pos.x - b.pos.x);
 
-    for (let i = 0; i < robots.length; i++) {
-      if (robots[i].pos.y !== lastY) {
-        if (robots[i].pos.y > maxPossibleYposMatch) {
-          break;
+      let count = 0;
+      let lastX = -1;
+      let lastY = 0;
+
+      for (let i = 0; i < robots.length; i++) {
+        if (robots[i].pos.y !== lastY) {
+          lastX = -1;
+          lastY = robots[i].pos.y;
+          count = 0;
         }
-        lastX = -1;
-        lastY = robots[i].pos.y;
-        count = 0;
+
+        if (robots[i].pos.x === lastX + 1) {
+          count++;
+          if (count >= 10) {
+            // log(robots, width, height);
+            return seconds;
+          }
+        } else {
+          count = 0;
+        }
+
+        lastX = robots[i].pos.x;
       }
-
-      if (robots[i].pos.x === lastX + 1) {
-        count++;
-        if (count >= 10) {
-          // log(robots, width, height);
-          return seconds;
-        }
-
-        if (robots[i].pos.x > maxPossibleXposMatch) {
-          break;
-        }
-      } else {
-        count = 0;
-      }
-
-      lastX = robots[i].pos.x;
     }
   }
   return -1;
