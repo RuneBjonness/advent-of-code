@@ -1,6 +1,5 @@
 import { AocPuzzle } from "@/aoc-puzzle";
 import { input } from "./input";
-import { e } from "vite-node/index-z0R8hVRu";
 
 export const silver = (input: string): number => {
   const [min, max] = input.split("-").map(Number);

@@ -30,9 +30,9 @@ export const runIntcode = (p: number[]) => {
   let i = 0;
 
   while (p[i] !== 99) {
-    if (p[i] == 1) {
+    if (p[i] === 1) {
       p[p[i + 3]] = p[p[i + 1]] + p[p[i + 2]];
-    } else if (p[i] == 2) {
+    } else if (p[i] === 2) {
       p[p[i + 3]] = p[p[i + 1]] * p[p[i + 2]];
     }
     i += 4;
