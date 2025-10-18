@@ -76,6 +76,9 @@ const secondsToChristmasTree = (
   width: number,
   height: number
 ): number => {
+  const maxPossibleYposMatch = height - 33;
+  const maxPossibleXposMatch = width - 22;
+
   const robots = parseInput(input);
 
   let seconds = 0;
@@ -85,22 +88,37 @@ const secondsToChristmasTree = (
       robot.pos = getPosition(robot, width, height);
     });
 
-    const grid = Array.from({ length: height }, () =>
-      Array.from({ length: width }, () => ".")
-    );
+    robots.sort((a, b) => a.pos.y - b.pos.y || a.pos.x - b.pos.x);
 
-    robots.forEach((robot) => {
-      grid[robot.pos.y][robot.pos.x] = "#";
-    });
+    let count = 0;
+    let lastX = -1;
+    let lastY = 0;
 
-    if (
-      grid
-        .flatMap((row) => row)
-        .join("")
-        .includes("##########")
-    ) {
-      // log(robots, width, height);
-      return seconds;
+    for (let i = 0; i < robots.length; i++) {
+      if (robots[i].pos.y !== lastY) {
+        if (robots[i].pos.y > maxPossibleYposMatch) {
+          break;
+        }
+        lastX = -1;
+        lastY = robots[i].pos.y;
+        count = 0;
+      }
+
+      if (robots[i].pos.x === lastX + 1) {
+        count++;
+        if (count >= 10) {
+          // log(robots, width, height);
+          return seconds;
+        }
+
+        if (robots[i].pos.x > maxPossibleXposMatch) {
+          break;
+        }
+      } else {
+        count = 0;
+      }
+
+      lastX = robots[i].pos.x;
     }
   }
   return -1;
