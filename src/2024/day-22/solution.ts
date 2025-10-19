@@ -9,24 +9,17 @@ export const silver = (input: string): number => {
 
 export const gold = (input: string): number => {
   const seeds = input.split("\n").map(Number);
-  const sequences = validSequences();
-  // console.log(sequences.length);
 
-  const buyers = seeds.map((seed) => prices(seed, 2000));
+  const sequencesTotals: Record<string, number> = {};
+  seeds.map((seed) => sequences(seed, 2000, sequencesTotals));
 
-  let mostBananas = 0;
-  for (const sequence of sequences) {
-    const prices = buyers.map((buyer) =>
-      getPriceAtFirstSequence(buyer, sequence)
-    );
-    const total = prices.reduce((acc, price) => acc + price, 0);
-
-    if (total > mostBananas) {
-      mostBananas = total;
-      // console.log(sequence, total);
+  let maxTotal = 0;
+  for (const seq in sequencesTotals) {
+    if (sequencesTotals[seq] > maxTotal) {
+      maxTotal = sequencesTotals[seq];
     }
   }
-  return mostBananas;
+  return maxTotal;
 };
 
 export const day22 = new AocPuzzle(2024, 22, silver, gold, input);
@@ -47,58 +40,29 @@ export const nthSecret = (val: number, n: number) => {
   return secret;
 };
 
-type PriceChange = { delta: number; price: number };
-type PriceList = {
-  changes: PriceChange[];
-  deltaString: string;
-};
-
-export const prices = (initialSecret: number, n: number): PriceList => {
+export const sequences = (
+  initialSecret: number,
+  n: number,
+  totals: Record<string, number>
+): Record<string, number> => {
   let secret = initialSecret;
   let prevPrice = secret % 10;
-  const prices: PriceChange[] = [];
+  const sequences: Record<string, number> = {};
+  let currentSequence = "";
   for (let i = 0; i < n; i++) {
     secret = nextSecret(secret);
     const price = secret % 10;
-    prices.push({ delta: price - prevPrice, price });
-    prevPrice = price;
-  }
-  return {
-    changes: prices,
-    deltaString: prices
-      .map((p) => (p.delta >= 0 ? `+${p.delta}` : `${p.delta}`))
-      .join(""),
-  };
-};
+    const delta = price - prevPrice;
+    currentSequence += price >= prevPrice ? `+${delta}` : `${delta}`;
 
-const validSequences = (): string[] => {
-  const result: string[] = [];
-  for (let a = -9; a < 10; a++) {
-    for (let b = -9; b < 10; b++) {
-      if (Math.abs(a + b) >= 10) {
-        continue;
-      }
-      for (let c = -9; c < 10; c++) {
-        if (Math.abs(a + b + c) >= 10) {
-          continue;
-        }
-        for (let d = -9; d < 10; d++) {
-          if (Math.abs(a + b + c + d) < 10) {
-            result.push(
-              [a, b, c, d].map((x) => (x >= 0 ? `+${x}` : `${x}`)).join("")
-            );
-          }
-        }
+    if (i > 3) {
+      currentSequence = currentSequence.slice(2);
+      if (!sequences[currentSequence]) {
+        sequences[currentSequence] = price;
+        totals[currentSequence] = (totals[currentSequence] || 0) + price;
       }
     }
+    prevPrice = price;
   }
-  return result;
-};
-
-const getPriceAtFirstSequence = (prices: PriceList, sequence: string) => {
-  const idx = prices.deltaString.indexOf(sequence);
-  if (idx !== -1) {
-    return prices.changes[idx / 2 + 3].price;
-  }
-  return 0;
+  return sequences;
 };

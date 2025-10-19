@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver, gold, nextSecret, nthSecret, prices } from "./solution";
+import { silver, gold, nextSecret, nthSecret } from "./solution";
 import { input } from "./input";
 
 const testInput = `1
@@ -37,29 +37,11 @@ describe("December 22", () => {
     expect(silver(input)).toBe(13429191512);
   });
 
-  test("prices", () => {
-    const p = prices(123, 9);
-
-    expect(p.changes.length).toBe(9);
-
-    expect(p.changes[0].delta).toBe(-3);
-    expect(p.changes[0].price).toBe(0);
-
-    expect(p.changes[1].delta).toBe(6);
-    expect(p.changes[1].price).toBe(6);
-
-    expect(p.changes[2].delta).toBe(-1);
-    expect(p.changes[2].price).toBe(5);
-
-    expect(p.changes[8].delta).toBe(-2);
-    expect(p.changes[8].price).toBe(2);
-  });
-
   test("gold - test input", () => {
     expect(gold(testInputGold)).toBe(23);
   });
 
-  // test("gold - actual puzzle input", () => {
-  //   expect(gold(input)).toBe(1582);
-  // });
+  test("gold - actual puzzle input", () => {
+    expect(gold(input)).toBe(1582);
+  });
 });
