@@ -47,27 +47,46 @@ export const nthSecret = (val: number, n: number) => {
   return secret;
 };
 
-export const prices = (initialSecret: number, n: number) => {
+type PriceChange = { delta: number; price: number };
+type PriceList = {
+  changes: PriceChange[];
+  deltaString: string;
+};
+
+export const prices = (initialSecret: number, n: number): PriceList => {
   let secret = initialSecret;
   let prevPrice = secret % 10;
-  const prices: number[][] = [];
+  const prices: PriceChange[] = [];
   for (let i = 0; i < n; i++) {
     secret = nextSecret(secret);
     const price = secret % 10;
-    prices.push([price - prevPrice, price]);
+    prices.push({ delta: price - prevPrice, price });
     prevPrice = price;
   }
-  return prices;
+  return {
+    changes: prices,
+    deltaString: prices
+      .map((p) => (p.delta >= 0 ? `+${p.delta}` : `${p.delta}`))
+      .join(""),
+  };
 };
 
-const validSequences = (): number[][] => {
-  const result: number[][] = [];
+const validSequences = (): string[] => {
+  const result: string[] = [];
   for (let a = -9; a < 10; a++) {
     for (let b = -9; b < 10; b++) {
+      if (Math.abs(a + b) >= 10) {
+        continue;
+      }
       for (let c = -9; c < 10; c++) {
+        if (Math.abs(a + b + c) >= 10) {
+          continue;
+        }
         for (let d = -9; d < 10; d++) {
           if (Math.abs(a + b + c + d) < 10) {
-            result.push([a, b, c, d]);
+            result.push(
+              [a, b, c, d].map((x) => (x >= 0 ? `+${x}` : `${x}`)).join("")
+            );
           }
         }
       }
@@ -76,17 +95,10 @@ const validSequences = (): number[][] => {
   return result;
 };
 
-const getPriceAtFirstSequence = (prices: number[][], sequence: number[]) => {
-  for (let i = 0; i < prices.length - 4; i++) {
-    const [a, b, c, d] = prices.slice(i, i + 4).map((x) => x[0]);
-    if (
-      a === sequence[0] &&
-      b === sequence[1] &&
-      c === sequence[2] &&
-      d === sequence[3]
-    ) {
-      return prices[i + 3][1];
-    }
+const getPriceAtFirstSequence = (prices: PriceList, sequence: string) => {
+  const idx = prices.deltaString.indexOf(sequence);
+  if (idx !== -1) {
+    return prices.changes[idx / 2 + 3].price;
   }
   return 0;
 };

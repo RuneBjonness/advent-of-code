@@ -40,24 +40,24 @@ describe("December 22", () => {
   test("prices", () => {
     const p = prices(123, 9);
 
-    expect(p.length).toBe(9);
+    expect(p.changes.length).toBe(9);
 
-    expect(p[0][0]).toBe(-3);
-    expect(p[0][1]).toBe(0);
+    expect(p.changes[0].delta).toBe(-3);
+    expect(p.changes[0].price).toBe(0);
 
-    expect(p[1][0]).toBe(6);
-    expect(p[1][1]).toBe(6);
+    expect(p.changes[1].delta).toBe(6);
+    expect(p.changes[1].price).toBe(6);
 
-    expect(p[2][0]).toBe(-1);
-    expect(p[2][1]).toBe(5);
+    expect(p.changes[2].delta).toBe(-1);
+    expect(p.changes[2].price).toBe(5);
 
-    expect(p[8][0]).toBe(-2);
-    expect(p[8][1]).toBe(2);
+    expect(p.changes[8].delta).toBe(-2);
+    expect(p.changes[8].price).toBe(2);
   });
 
-  // test("gold - test input", () => {
-  //   expect(gold(testInputGold)).toBe(23);
-  // });
+  test("gold - test input", () => {
+    expect(gold(testInputGold)).toBe(23);
+  });
 
   // test("gold - actual puzzle input", () => {
   //   expect(gold(input)).toBe(1582);
