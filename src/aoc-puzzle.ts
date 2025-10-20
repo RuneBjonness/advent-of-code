@@ -19,11 +19,9 @@ export class AocPuzzle {
   solvePart(part: PuzzlePart): void {
     let resultValue: number | string;
     let duration = "--";
-    let comment = "";
 
     if (this.skipParts.has(part)) {
-      resultValue = "--";
-      comment = this.skipParts.get(part);
+      resultValue = this.skipParts.get(part);
     } else {
       performance.mark("start");
       resultValue =
@@ -31,7 +29,7 @@ export class AocPuzzle {
       performance.mark("end");
 
       if (Number.isNaN(resultValue)) {
-        comment = "Not solved";
+        resultValue = "Not solved";
       } else {
         duration = performance
           .measure("solve", "start", "end")
@@ -42,11 +40,11 @@ export class AocPuzzle {
 
     const day = this.day.toString().padStart(2);
     const puzzlePart = part.padEnd(7);
-    const result = resultValue.toString().padStart(32);
+    const result = resultValue.toString();
     duration = duration.padStart(10);
 
     console.log(
-      `${this.year} | ${day} | ${puzzlePart}| ${result} | ${duration} | ${comment}`
+      `${this.year} | ${day} | ${puzzlePart} | ${duration} | ${result}`
     );
   }
 
