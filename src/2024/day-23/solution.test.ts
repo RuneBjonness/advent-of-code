@@ -48,7 +48,7 @@ describe("December 23", () => {
     expect(gold(testInput)).toBe("co,de,ka,ta");
   });
 
-  // test("gold - actual puzzle input", () => {
-  //   expect(gold(input)).toBe("ag,gh,hh,iv,jx,nq,oc,qm,rb,sm,vm,wu,zr");
-  // });
+  test("gold - actual puzzle input", () => {
+    expect(gold(input)).toBe("ag,gh,hh,iv,jx,nq,oc,qm,rb,sm,vm,wu,zr");
+  });
 });

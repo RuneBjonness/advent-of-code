@@ -28,21 +28,22 @@ export const gold = (input: string): string => {
     nodes.set(key, value.sort());
   });
 
-  let longest = [];
+  let largestNetwork: string[] = [];
   const sortedKeys = [...nodes.keys()].sort();
 
   for (const key of sortedKeys) {
-    const chain = longestChain(
-      key,
+    const network = findLargestNetwork(
+      [key],
       nodes.get(key)!.filter((x) => x > key),
+      largestNetwork.length + 1,
       nodes
     );
-    if (chain.length > longest.length) {
-      longest = chain;
+    if (network.length > largestNetwork.length) {
+      largestNetwork = network;
     }
   }
 
-  return longest.join(",");
+  return largestNetwork.join(",");
 };
 
 export const day23 = new AocPuzzle(2024, 23, silver, gold, input);
@@ -64,24 +65,30 @@ const parseNodes = (input: string): Map<string, string[]> => {
   return nodes;
 };
 
-const longestChain = (
-  node: string,
-  common: string[],
+const findLargestNetwork = (
+  network: string[],
+  sharedNodes: string[],
+  minSize: number,
   nodes: Map<string, string[]>
 ): string[] => {
-  if (common.length === 0) {
-    return [node];
+  if (
+    sharedNodes.length === 0 ||
+    network.length + sharedNodes.length < minSize
+  ) {
+    return network;
   }
-  let longest = [];
-  for (const c of common) {
-    const chain = longestChain(
-      c,
-      nodes.get(c)!.filter((x) => common.includes(x)),
+  let largestNetwork: string[] = [];
+  for (const n of sharedNodes) {
+    const networkCandidate = findLargestNetwork(
+      [...network, n],
+      nodes.get(n)!.filter((x) => sharedNodes.includes(x)),
+      minSize,
       nodes
     );
-    if (chain.length > longest.length) {
-      longest = chain;
+    if (networkCandidate.length > largestNetwork.length) {
+      largestNetwork = networkCandidate;
+      minSize = Math.max(largestNetwork.length + 1, minSize);
     }
   }
-  return [node, ...longest];
+  return largestNetwork;
 };
