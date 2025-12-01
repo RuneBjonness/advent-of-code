@@ -1,3 +1,4 @@
+import { file } from "bun";
 export type PuzzlePart = "silver" | "gold";
 
 export class AocPuzzle {
@@ -16,7 +17,15 @@ export class AocPuzzle {
     return this;
   }
 
-  solvePart(part: PuzzlePart): void {
+  async readInput(path?: string): Promise<string> {
+    if (!path) {
+      return this.input;
+    }
+    const text = (await file(path).text()).trimEnd();
+    return text;
+  }
+
+  solvePart(part: PuzzlePart, input = this.input): void {
     let resultValue: number | string;
     let duration = "--";
 
@@ -24,8 +33,7 @@ export class AocPuzzle {
       resultValue = this.skipParts.get(part);
     } else {
       performance.mark("start");
-      resultValue =
-        part === "silver" ? this.silver(this.input) : this.gold(this.input);
+      resultValue = part === "silver" ? this.silver(input) : this.gold(input);
       performance.mark("end");
 
       if (Number.isNaN(resultValue)) {
@@ -48,8 +56,8 @@ export class AocPuzzle {
     );
   }
 
-  solve(): void {
-    this.solvePart("silver");
-    this.solvePart("gold");
+  solve(input?: string): void {
+    this.solvePart("silver", input);
+    this.solvePart("gold", input);
   }
 }

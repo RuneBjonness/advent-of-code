@@ -2,21 +2,27 @@
 
 Advent of code solutions
 
-## 2019 (day 1-5), 2023 (day 1-3) & 2024
-
-Solutions in TypeScript.
-
 ```
-npm start [year] [dayNumber] [partFilter <silver | gold>]
+> bun run dev [options]
 
-npm start                    # Run all solutions for every year
-npm start 2023               # Run all solutions for 2023
-npm start 2024 1             # Run both parts for day 1, 2024
-npm start 2024 24 silver     # Run silver solution for day 24, 2024
-npm start 2024 * gold        # Run all gold solutions for 2024
-npm start * 24               # Run all day 24 solutions for every year
+Options:
+  -y | --year <year> | Specify the year (e.g., 2025)
+  -d | --day <day>   | Specify the day (1-25)
+     | --silver      | Run only part 1 (the silver star)
+     | --gold        | Run only part 2 (the gold star)
+  -p | --path <path> | Specify a custom input file path (requires --year and --day to be set)
+
+Examples:
+  # Run all solutions for every year and day available:
+  > bun run dev
+
+  # Run both parts for day 1, 2025 - using custom input file
+  > bun run dev -y 2025 -d 1 --path ./input/2025_01.txt
+
+  # Run silver solution for day 24, 2024
+  > bun run dev -y 2024 -d 24 --silver
 ```
 
-## 2020 (day 20) & 2021 (day 1-19)
+This works for the solutions in TypeScript (2019, 2023-2025).
 
-Solutions in plain JavaScript
+2020 (day 20) & 2021 (day 1-19) are in plain JavaScript

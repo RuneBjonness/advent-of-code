@@ -1,4 +1,4 @@
-import { PuzzlePart } from "./aoc-puzzle";
+import { parseArgs } from "util";
 import { getPuzzles } from "./puzzle-collection";
 
 const parseYearFilter = (year?: string): number | null => {
@@ -7,7 +7,7 @@ const parseYearFilter = (year?: string): number | null => {
   }
 
   const yearNumber = Number(year);
-  if (yearNumber < 2015 || isNaN(yearNumber)) {
+  if (yearNumber < 2015 || Number.isNaN(yearNumber)) {
     throw new Error("Invalid year filter");
   }
   return yearNumber;
@@ -19,38 +19,62 @@ const parseDayFilter = (day?: string): number | null => {
   }
 
   const dayNumber = Number(day);
-  if (dayNumber < 1 || dayNumber > 25 || isNaN(dayNumber)) {
+  if (dayNumber < 1 || dayNumber > 25 || Number.isNaN(dayNumber)) {
     throw new Error("Invalid day filter");
   }
   return dayNumber;
 };
 
-const parsePartFilter = (part?: string): PuzzlePart | null => {
-  if (!part || part === "*") {
-    return null;
-  }
+const { values } = parseArgs({
+  args: Bun.argv,
+  options: {
+    year: {
+      type: "string",
+      short: "y",
+    },
+    day: {
+      type: "string",
+      short: "d",
+    },
+    silver: {
+      type: "boolean",
+    },
+    gold: {
+      type: "boolean",
+    },
+    path: {
+      type: "string",
+      short: "p",
+    },
+  },
+  strict: true,
+  allowPositionals: true,
+});
 
-  if (part !== "silver" && part !== "gold") {
-    throw new Error("Invalid part filter");
-  }
-
-  return part;
-};
-
-const year = parseYearFilter(process.argv[2]);
-const day = parseDayFilter(process.argv[3]);
-const part = parsePartFilter(process.argv[4]);
+const year = parseYearFilter(values.year);
+const day = parseDayFilter(values.day);
 
 const puzzles = getPuzzles(year, day);
 
 if (puzzles.length === 0) {
   console.log("No puzzles found");
-}
-
-puzzles.forEach((puzzle) => {
-  if (part) {
-    puzzle.solvePart(part);
+} else if (values.path && puzzles.length === 1) {
+  const input = await puzzles[0].readInput(values.path);
+  if (values.silver) {
+    puzzles[0].solvePart("silver", input);
+  } else if (values.gold) {
+    puzzles[0].solvePart("gold", input);
   } else {
-    puzzle.solve();
+    puzzles[0].solve(input);
   }
-});
+} else {
+  for (const puzzle of puzzles) {
+    if (values.silver) {
+      puzzle.solvePart("silver");
+    } else if (values.gold) {
+      puzzle.solvePart("gold");
+    } else {
+      puzzle.solve();
+    }
+  }
+}
