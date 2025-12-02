@@ -1,5 +1,4 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import {
   cell,
   Direction,
@@ -8,7 +7,7 @@ import {
   shiftPosition,
 } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const maze = parseMaze(input);
   const start = getPositions(maze, (x) => x.type === "S")[0];
   maze[start.row][start.col].fromLeft = 0;
@@ -33,7 +32,7 @@ export const silver = (input: string): number => {
   return Math.min(end.fromAbove, end.fromBelow, end.fromLeft, end.fromRight);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const maze = parseMaze(input);
   const start = getPositions(maze, (x) => x.type === "S")[0];
   maze[start.row][start.col].fromLeft = 0;
@@ -96,7 +95,7 @@ export const gold = (input: string): number => {
   return getPositions(maze, (x) => x.type === "O").length;
 };
 
-export const day16 = new AocPuzzle(2024, 16, silver, gold, input);
+export const day16 = new AocPuzzle(2024, 16, silver, gold);
 
 type MazeCell = {
   type: string;

@@ -1,16 +1,15 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import { vec2, Vec2 } from "@/lib/vec2";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return safetyFactor(input, 101, 103);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return secondsToChristmasTree(input, 101, 103);
 };
 
-export const day14 = new AocPuzzle(2024, 14, silver, gold, input);
+export const day14 = new AocPuzzle(2024, 14, silver, gold);
 
 type Robot = { pos: Vec2; vel: Vec2 };
 

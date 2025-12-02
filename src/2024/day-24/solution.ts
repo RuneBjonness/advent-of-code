@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const [wireValues, gateConnections] = input.split("\n\n");
 
   const wires = new Map<string, number>();
@@ -32,7 +31,7 @@ export const silver = (input: string): number => {
   return parseInt(binary, 2);
 };
 
-export const gold = (input: string): string => {
+const gold = (input: string): string => {
   const [wires, gateSection] = input.split("\n\n");
   const bits = wires.split("\n").length / 2;
 
@@ -145,7 +144,7 @@ export const gold = (input: string): string => {
   return swappedGateOutputs.sort().join(",");
 };
 
-export const day24 = new AocPuzzle(2024, 24, silver, gold, input);
+export const day24 = new AocPuzzle(2024, 24, silver, gold);
 
 type GateConnection = {
   in1: string;

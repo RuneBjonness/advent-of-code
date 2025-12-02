@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   let result = 0;
   const rows = input.split("\n");
 
@@ -17,7 +16,7 @@ export const silver = (input: string): number => {
   return result;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   let result = 0;
   const rows = input.split("\n");
 
@@ -33,7 +32,7 @@ export const gold = (input: string): number => {
   return result;
 };
 
-export const day03 = new AocPuzzle(2023, 3, silver, gold, input);
+export const day03 = new AocPuzzle(2023, 3, silver, gold);
 
 const clamp = (value: number, min: number, max: number): number => {
   return Math.min(Math.max(value, min), max);

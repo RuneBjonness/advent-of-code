@@ -1,14 +1,13 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return input
     .split("\n")
     .map((x) => requiredFuel(Number(x)))
     .reduce((a, b) => a + b);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return input
     .split("\n")
     .map((x) => requiredFuel(Number(x)))
@@ -16,7 +15,7 @@ export const gold = (input: string): number => {
     .reduce((a, b) => a + b);
 };
 
-export const day01 = new AocPuzzle(2019, 1, silver, gold, input);
+export const day01 = new AocPuzzle(2019, 1, silver, gold);
 
 const requiredFuel = (mass: number): number => Math.floor(mass / 3) - 2;
 

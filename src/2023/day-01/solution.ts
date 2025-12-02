@@ -1,13 +1,12 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return input
     .split("\n")
     .reduce((acc, x) => acc + firstDigit(x) * 10 + lastDigit(x), 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return input
     .split("\n")
     .reduce(
@@ -17,7 +16,7 @@ export const gold = (input: string): number => {
     );
 };
 
-export const day01 = new AocPuzzle(2023, 1, silver, gold, input);
+export const day01 = new AocPuzzle(2023, 1, silver, gold);
 
 const digits = [
   "zero",

@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const [min, max] = input.split("-").map(Number);
   let count = 0;
 
@@ -13,7 +12,7 @@ export const silver = (input: string): number => {
   return count;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const [min, max] = input.split("-").map(Number);
   let count = 0;
 
@@ -25,7 +24,7 @@ export const gold = (input: string): number => {
   return count;
 };
 
-export const day04 = new AocPuzzle(2019, 4, silver, gold, input);
+export const day04 = new AocPuzzle(2019, 4, silver, gold);
 
 const isValidPassword = (pwd: number, exactDouble?: boolean): boolean => {
   const digits = String(pwd).split("").map(Number);

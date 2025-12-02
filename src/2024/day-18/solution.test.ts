@@ -1,11 +1,5 @@
 import { describe, expect, test } from "vitest";
-import {
-  silver,
-  gold,
-  getFirstBreakingPosition,
-  getLowestCost,
-} from "./solution";
-import { input } from "./input";
+import { day18, getFirstBreakingPosition, getLowestCost } from "./solution";
 
 const testInput = `5,4
 4,2
@@ -38,15 +32,15 @@ describe("December 18", () => {
     expect(getLowestCost(testInput, 7, 12)).toBe(22);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(282);
+  test("silver - actual puzzle input", async () => {
+    expect(day18.silver(await day18.readInput())).toBe(282);
   });
 
   test("gold - test input", () => {
     expect(getFirstBreakingPosition(testInput, 7)).toBe("6,1");
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe("64,29");
+  test("gold - actual puzzle input", async () => {
+    expect(day18.gold(await day18.readInput())).toBe("64,29");
   });
 });

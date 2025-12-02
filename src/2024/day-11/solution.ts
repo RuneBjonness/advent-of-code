@@ -1,15 +1,14 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return calculateNumberOfStones(input, 25);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return calculateNumberOfStones(input, 75);
 };
 
-export const day11 = new AocPuzzle(2024, 11, silver, gold, input);
+export const day11 = new AocPuzzle(2024, 11, silver, gold);
 
 const calculateNumberOfStones = (input: string, blinks: number): number => {
   let stones = input.split(" ").map(Number);

@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const [wire1Instructions, wire2Instructions] = input.split("\n");
 
   let closestIntersectionDist = Number.POSITIVE_INFINITY;
@@ -27,7 +26,7 @@ export const silver = (input: string): number => {
   return closestIntersectionDist;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const [wire1Instructions, wire2Instructions] = input.split("\n");
 
   let closestIntersectionWireLength = Number.POSITIVE_INFINITY;
@@ -51,7 +50,7 @@ export const gold = (input: string): number => {
   return closestIntersectionWireLength;
 };
 
-export const day03 = new AocPuzzle(2019, 3, silver, gold, input);
+export const day03 = new AocPuzzle(2019, 3, silver, gold);
 
 type Position = { x: number; y: number };
 

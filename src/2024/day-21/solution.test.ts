@@ -1,13 +1,11 @@
 import { describe, expect, test } from "vitest";
 import {
-  silver,
-  gold,
+  day21,
   dirKeysToPressNumPadKey,
   dirKeysToPressDirKey,
   dirKeysForNumPadCode,
   dirKeysForDirKeySequence,
 } from "./solution";
-import { input } from "./input";
 
 const testInput = `029A
 980A
@@ -41,14 +39,14 @@ describe("December 21", () => {
   });
 
   test("silver - test input", () => {
-    expect(silver(testInput)).toBe(126384);
+    expect(day21.silver(testInput)).toBe(126384);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(238078);
+  test("silver - actual puzzle input", async () => {
+    expect(day21.silver(await day21.readInput())).toBe(238078);
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe(293919502998014);
+  test("gold - actual puzzle input", async () => {
+    expect(day21.gold(await day21.readInput())).toBe(293919502998014);
   });
 });

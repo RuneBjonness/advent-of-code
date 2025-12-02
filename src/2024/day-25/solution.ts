@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const [locks, keys] = parseLocksAndKeys(input);
 
   let count = 0;
@@ -16,11 +15,11 @@ export const silver = (input: string): number => {
   return count;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return NaN;
 };
 
-export const day25 = new AocPuzzle(2024, 25, silver, gold, input);
+export const day25 = new AocPuzzle(2024, 25, silver, gold);
 
 const parseLocksAndKeys = (input: string): [number[][], number[][]] => {
   const locks: number[][] = [];

@@ -1,16 +1,15 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import { cell, Direction, GridPosition, shiftPosition } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return getLowestCost(input, 71, 1024);
 };
 
-export const gold = (input: string): string => {
+const gold = (input: string): string => {
   return getFirstBreakingPosition(input, 71);
 };
 
-export const day18 = new AocPuzzle(2024, 18, silver, gold, input);
+export const day18 = new AocPuzzle(2024, 18, silver, gold);
 
 export const getLowestCost = (
   input: string,

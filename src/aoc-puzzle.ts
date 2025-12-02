@@ -2,15 +2,19 @@ import { file } from "bun";
 export type PuzzlePart = "silver" | "gold";
 
 export class AocPuzzle {
-  private skipParts = new Map<PuzzlePart, string>();
+  private readonly skipParts = new Map<PuzzlePart, string>();
+  private readonly defaultInputPath: string;
 
   constructor(
     public readonly year: number,
     public readonly day: number,
     public readonly silver: (input: string) => number | string,
-    public readonly gold: (input: string) => number | string,
-    public readonly input: string
-  ) {}
+    public readonly gold: (input: string) => number | string
+  ) {
+    this.defaultInputPath = `./input/${this.year}_${this.day
+      .toString()
+      .padStart(2, "0")}.txt`;
+  }
 
   skip(part: PuzzlePart, reason: string): AocPuzzle {
     this.skipParts.set(part, reason);
@@ -18,14 +22,11 @@ export class AocPuzzle {
   }
 
   async readInput(path?: string): Promise<string> {
-    if (!path) {
-      return this.input;
-    }
-    const text = (await file(path).text()).trimEnd();
+    const text = (await file(path ?? this.defaultInputPath).text()).trimEnd();
     return text;
   }
 
-  solvePart(part: PuzzlePart, input = this.input): void {
+  solvePart(part: PuzzlePart, input: string): void {
     let resultValue: number | string;
     let duration = "--";
 
@@ -56,7 +57,7 @@ export class AocPuzzle {
     );
   }
 
-  solve(input?: string): void {
+  solve(input: string): void {
     this.solvePart("silver", input);
     this.solvePart("gold", input);
   }

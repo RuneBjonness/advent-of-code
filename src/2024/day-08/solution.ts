@@ -1,8 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import { getPositions, GridPosition, isValidPosition } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));
   const antiNodePositions: GridPosition[] = [];
 
@@ -27,7 +26,7 @@ export const silver = (input: string): number => {
   return antiNodePositions.length;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));
   const antiNodePositions = getPositions(grid, (x) => x !== ".");
 
@@ -59,7 +58,7 @@ export const gold = (input: string): number => {
   return antiNodePositions.length;
 };
 
-export const day08 = new AocPuzzle(2024, 8, silver, gold, input);
+export const day08 = new AocPuzzle(2024, 8, silver, gold);
 
 const findAntennaTypes = (grid: string[][]): string[] => {
   return [...new Set(grid.flat())].filter((cell) => cell !== ".");

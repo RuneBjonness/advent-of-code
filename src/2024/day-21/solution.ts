@@ -1,19 +1,18 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return input.split("\n").reduce((acc, code) => {
     return acc + shortestForCode(code) * Number(code.slice(0, 3));
   }, 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return input.split("\n").reduce((acc, code) => {
     return acc + shortestForCode(code, 25) * Number(code.slice(0, 3));
   }, 0);
 };
 
-export const day21 = new AocPuzzle(2024, 21, silver, gold, input);
+export const day21 = new AocPuzzle(2024, 21, silver, gold);
 
 export const dirKeysToPressNumPadKey = (
   startKey: string,

@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver, gold } from "./solution";
-import { input } from "./input";
+import { day15 } from "./solution";
 
 const testInputSmall = `########
 #..O.O.#
@@ -37,22 +36,22 @@ v^^>>><<^^<>>^v^<v^vv<>v^<<>^<^v^v><^<<<><<^<v><v<>vv>>v><v^<vv<>v^<<^`;
 
 describe("December 15", () => {
   test("silver - test input small", () => {
-    expect(silver(testInputSmall)).toBe(2028);
+    expect(day15.silver(testInputSmall)).toBe(2028);
   });
 
   test("silver - test input large", () => {
-    expect(silver(testInputLarge)).toBe(10092);
+    expect(day15.silver(testInputLarge)).toBe(10092);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(1552879);
+  test("silver - actual puzzle input", async () => {
+    expect(day15.silver(await day15.readInput())).toBe(1552879);
   });
 
   test("gold - test input large", () => {
-    expect(gold(testInputLarge)).toBe(9021);
+    expect(day15.gold(testInputLarge)).toBe(9021);
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe(1561175);
+  test("gold - actual puzzle input", async () => {
+    expect(day15.gold(await day15.readInput())).toBe(1561175);
   });
 });

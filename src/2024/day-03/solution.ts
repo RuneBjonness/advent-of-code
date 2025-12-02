@@ -1,13 +1,12 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return [...input.matchAll(/mul\((\d+),(\d+)\)/g)].reduce((acc, p) => {
     return acc + Number(p[1]) * Number(p[2]);
   }, 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const validInstructions = input.matchAll(
     /mul\((\d+),(\d+)\)|(do\(\))|(don\'t\(\))/g
   );
@@ -25,4 +24,4 @@ export const gold = (input: string): number => {
   return total;
 };
 
-export const day03 = new AocPuzzle(2024, 3, silver, gold, input);
+export const day03 = new AocPuzzle(2024, 3, silver, gold);

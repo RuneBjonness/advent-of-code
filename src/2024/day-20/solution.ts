@@ -1,5 +1,4 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import {
   cell,
   Direction,
@@ -9,11 +8,11 @@ import {
   shiftPosition,
 } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return countCheats(input, 100);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const track = parseTrack(input);
   const path = traceTrack(track);
   let count = 0;
@@ -25,7 +24,7 @@ export const gold = (input: string): number => {
   return count;
 };
 
-export const day20 = new AocPuzzle(2024, 20, silver, gold, input);
+export const day20 = new AocPuzzle(2024, 20, silver, gold);
 
 export const countCheats = (input: string, minSave: number): number => {
   const track = parseTrack(input);

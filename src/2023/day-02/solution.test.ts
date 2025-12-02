@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver, gold } from "./solution";
-import { input } from "./input";
+import { day02 } from "./solution";
 
 const testInput = `Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
 Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue
@@ -10,18 +9,18 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green`;
 
 describe("December 02", () => {
   test("silver - test input", () => {
-    expect(silver(testInput)).toBe(8);
+    expect(day02.silver(testInput)).toBe(8);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(3059);
+  test("silver - actual puzzle input", async () => {
+    expect(day02.silver(await day02.readInput())).toBe(3059);
   });
 
   test("gold - test input", () => {
-    expect(gold(testInput)).toBe(2286);
+    expect(day02.gold(testInput)).toBe(2286);
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe(65371);
+  test("gold - actual puzzle input", async () => {
+    expect(day02.gold(await day02.readInput())).toBe(65371);
   });
 });

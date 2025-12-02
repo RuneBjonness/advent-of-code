@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   let result = 0;
 
   let fileIndex = -1;
@@ -52,7 +51,7 @@ export const silver = (input: string): number => {
   return result;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   let result = 0;
   let fileIndex = (input.length - 1) / 2;
   let diskMap = input.split("").map(Number);
@@ -85,4 +84,4 @@ export const gold = (input: string): number => {
   return result;
 };
 
-export const day09 = new AocPuzzle(2024, 9, silver, gold, input);
+export const day09 = new AocPuzzle(2024, 9, silver, gold);

@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver, gold, countCheats } from "./solution";
-import { input } from "./input";
+import { day20, countCheats } from "./solution";
 
 const testInput = `###############
 #...#...#.....#
@@ -23,11 +22,11 @@ describe("December 20", () => {
     expect(countCheats(testInput, 10)).toBe(10);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(1197);
+  test("silver - actual puzzle input", async () => {
+    expect(day20.silver(await day20.readInput())).toBe(1197);
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe(944910);
+  test("gold - actual puzzle input", async () => {
+    expect(day20.gold(await day20.readInput())).toBe(944910);
   });
 });

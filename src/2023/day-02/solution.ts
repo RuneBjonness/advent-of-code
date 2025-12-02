@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return input
     .split("\n")
     .map(parseGame)
@@ -9,14 +8,14 @@ export const silver = (input: string): number => {
     .reduce((acc, x) => acc + x.id, 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return input
     .split("\n")
     .map(parseGame)
     .reduce((acc, x) => acc + x.red * x.green * x.blue, 0);
 };
 
-export const day02 = new AocPuzzle(2023, 2, silver, gold, input);
+export const day02 = new AocPuzzle(2023, 2, silver, gold);
 
 type Game = {
   id: number;

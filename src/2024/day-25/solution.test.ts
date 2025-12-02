@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver } from "./solution";
-import { input } from "./input";
+import { day25 } from "./solution";
 
 const testInput = `#####
 .####
@@ -44,10 +43,10 @@ const testInput = `#####
 
 describe("December 25", () => {
   test("silver - test input", () => {
-    expect(silver(testInput)).toBe(3);
+    expect(day25.silver(testInput)).toBe(3);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(3077);
+  test("silver - actual puzzle input", async () => {
+    expect(day25.silver(await day25.readInput())).toBe(3077);
   });
 });

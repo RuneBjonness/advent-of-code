@@ -58,23 +58,16 @@ const puzzles = getPuzzles(year, day);
 
 if (puzzles.length === 0) {
   console.log("No puzzles found");
-} else if (values.path && puzzles.length === 1) {
-  const input = await puzzles[0].readInput(values.path);
-  if (values.silver) {
-    puzzles[0].solvePart("silver", input);
-  } else if (values.gold) {
-    puzzles[0].solvePart("gold", input);
-  } else {
-    puzzles[0].solve(input);
-  }
 } else {
+  const path = puzzles.length === 1 ? values.path : undefined;
   for (const puzzle of puzzles) {
+    const input = await puzzle.readInput(path);
     if (values.silver) {
-      puzzle.solvePart("silver");
+      puzzle.solvePart("silver", input);
     } else if (values.gold) {
-      puzzle.solvePart("gold");
+      puzzle.solvePart("gold", input);
     } else {
-      puzzle.solve();
+      puzzle.solve(input);
     }
   }
 }

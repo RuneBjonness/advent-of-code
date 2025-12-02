@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver, gold, safetyFactor } from "./solution";
-import { input } from "./input";
+import { day14, safetyFactor } from "./solution";
 
 const testInput = `p=0,4 v=3,-3
 p=6,3 v=-1,-3
@@ -20,11 +19,11 @@ describe("December 14", () => {
     expect(safetyFactor(testInput, 11, 7)).toBe(12);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(230172768);
+  test("silver - actual puzzle input", async () => {
+    expect(day14.silver(await day14.readInput())).toBe(230172768);
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe(8087);
+  test("gold - actual puzzle input", async () => {
+    expect(day14.gold(await day14.readInput())).toBe(8087);
   });
 });

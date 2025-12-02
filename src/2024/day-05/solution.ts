@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const [ruleSection, updateSection] = input.split("\n\n");
 
   const rules = ruleSection
@@ -15,7 +14,7 @@ export const silver = (input: string): number => {
     .reduce((acc, update) => acc + update[(update.length - 1) / 2], 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const [ruleSection, updateSection] = input.split("\n\n");
 
   const rules = ruleSection
@@ -50,7 +49,7 @@ export const gold = (input: string): number => {
     .reduce((acc, update) => acc + update[(update.length - 1) / 2], 0);
 };
 
-export const day05 = new AocPuzzle(2024, 5, silver, gold, input);
+export const day05 = new AocPuzzle(2024, 5, silver, gold);
 
 const isValidUpdate = (rules: number[][], update: number[]): boolean => {
   for (let i = 0; i < update.length - 1; i++) {

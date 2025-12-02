@@ -1,14 +1,13 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return input
     .split("\n")
     .map((levels) => levels.split(" ").map(Number))
     .filter((report) => isSafe(report, 3)).length;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const reports = input
     .split("\n")
     .map((levels) => levels.split(" ").map(Number));
@@ -30,7 +29,7 @@ export const gold = (input: string): number => {
   return safeCount;
 };
 
-export const day02 = new AocPuzzle(2024, 2, silver, gold, input);
+export const day02 = new AocPuzzle(2024, 2, silver, gold);
 
 type Trend = "increasing" | "decreasing" | "constant";
 

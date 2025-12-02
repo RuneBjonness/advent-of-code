@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const lp = getListPair(input);
   lp.list1.sort((a, b) => a - b);
   lp.list2.sort((a, b) => a - b);
@@ -9,7 +8,7 @@ export const silver = (input: string): number => {
   return lp.list1.reduce((acc, x, i) => acc + Math.abs(x - lp.list2[i]), 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const lp = getListPair(input);
 
   return lp.list1.reduce(
@@ -18,7 +17,7 @@ export const gold = (input: string): number => {
   );
 };
 
-export const day01 = new AocPuzzle(2024, 1, silver, gold, input);
+export const day01 = new AocPuzzle(2024, 1, silver, gold);
 
 type ListPair = {
   list1: number[];

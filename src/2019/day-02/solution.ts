@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const program = input.split(",").map((x) => Number(x));
 
   program[1] = 12;
@@ -10,7 +9,7 @@ export const silver = (input: string): number => {
   return runIntcode(program)[0];
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   for (let i = 0; i < 100; i++) {
     for (let j = 0; j < 100; j++) {
       const program = input.split(",").map((x) => Number(x));
@@ -24,7 +23,7 @@ export const gold = (input: string): number => {
   return 0;
 };
 
-export const day02 = new AocPuzzle(2019, 2, silver, gold, input);
+export const day02 = new AocPuzzle(2019, 2, silver, gold);
 
 export const runIntcode = (p: number[]) => {
   let i = 0;

@@ -1,8 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import { cell, Direction, GridPosition, shiftPosition } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const grid: Plot[][] = input
     .split("\n")
     .map((row) =>
@@ -25,7 +24,7 @@ export const silver = (input: string): number => {
   return totalPrice;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const grid: Plot[][] = input
     .split("\n")
     .map((row) =>
@@ -119,7 +118,7 @@ export const gold = (input: string): number => {
   return regions.reduce((acc, region) => acc + region.area * region.sides, 0);
 };
 
-export const day12 = new AocPuzzle(2024, 12, silver, gold, input);
+export const day12 = new AocPuzzle(2024, 12, silver, gold);
 
 type Plot = {
   plant: string;

@@ -1,8 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
 import { directions, cells } from "@/lib/grid";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));
 
   let count = 0;
@@ -21,7 +20,7 @@ export const silver = (input: string): number => {
   return count;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));
 
   let count = 0;
@@ -40,4 +39,4 @@ export const gold = (input: string): number => {
   return count;
 };
 
-export const day04 = new AocPuzzle(2024, 4, silver, gold, input);
+export const day04 = new AocPuzzle(2024, 4, silver, gold);

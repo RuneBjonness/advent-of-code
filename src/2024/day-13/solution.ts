@@ -1,19 +1,18 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import { vec2, Vec2 } from "@/lib/vec2";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return parseInput(input).reduce((acc, m) => acc + tokenCostMachine(m), 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return parseInput(input, 10000000000000).reduce(
     (acc, m) => acc + tokenCostMachine(m),
     0
   );
 };
 
-export const day13 = new AocPuzzle(2024, 13, silver, gold, input);
+export const day13 = new AocPuzzle(2024, 13, silver, gold);
 
 type Machine = { a: Vec2; b: Vec2; prize: Vec2 };
 

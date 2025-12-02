@@ -1,8 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import { cell, getPositions, GridPosition, shiftPosition } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const grid = parseInput(input);
   const trailHeads = getPositions(grid, (x) => x.height === 0);
 
@@ -11,7 +10,7 @@ export const silver = (input: string): number => {
   }, 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const grid = parseInput(input);
   const trailHeads = getPositions(grid, (x) => x.height === 0);
 
@@ -20,7 +19,7 @@ export const gold = (input: string): number => {
   }, 0);
 };
 
-export const day10 = new AocPuzzle(2024, 10, silver, gold, input);
+export const day10 = new AocPuzzle(2024, 10, silver, gold);
 
 type TopologyCell = {
   height: number;

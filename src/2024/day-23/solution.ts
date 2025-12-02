@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const nodes = parseNodes(input);
   const sets = new Set<string>();
 
@@ -22,7 +21,7 @@ export const silver = (input: string): number => {
   return sets.size;
 };
 
-export const gold = (input: string): string => {
+const gold = (input: string): string => {
   const nodes = parseNodes(input);
   nodes.forEach((value, key) => {
     nodes.set(key, value.sort());
@@ -46,7 +45,7 @@ export const gold = (input: string): string => {
   return largestNetwork.join(",");
 };
 
-export const day23 = new AocPuzzle(2024, 23, silver, gold, input);
+export const day23 = new AocPuzzle(2024, 23, silver, gold);
 
 const parseNodes = (input: string): Map<string, string[]> => {
   const nodes = new Map<string, string[]>();

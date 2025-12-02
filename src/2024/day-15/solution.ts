@@ -1,5 +1,4 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 import {
   cell,
   Direction,
@@ -8,7 +7,7 @@ import {
   shiftPosition,
 } from "@/lib/grid";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const sections = input.split("\n\n");
   const grid = sections[0].split("\n").map((row) => row.split(""));
   const robotPos = getPositions(grid, (x) => x === "@")[0];
@@ -51,7 +50,7 @@ export const silver = (input: string): number => {
     .reduce((acc, val) => acc + val, 0);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const sections = input.split("\n\n");
   const grid = sections[0].split("\n").map((row) =>
     row
@@ -163,7 +162,7 @@ export const gold = (input: string): number => {
     .reduce((acc, val) => acc + val, 0);
 };
 
-export const day15 = new AocPuzzle(2024, 15, silver, gold, input);
+export const day15 = new AocPuzzle(2024, 15, silver, gold);
 
 const logMap = (m: string[][]): void => {
   console.log(m.map((row) => row.join("")).join("\n"));

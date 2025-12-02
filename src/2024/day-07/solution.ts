@@ -1,15 +1,14 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   return totalCalibrationResult(input, [add, multiply]);
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   return totalCalibrationResult(input, [add, multiply, concatinate]);
 };
 
-export const day07 = new AocPuzzle(2024, 7, silver, gold, input);
+export const day07 = new AocPuzzle(2024, 7, silver, gold);
 
 type Operation = (a: number, b: number) => number;
 const add: Operation = (a, b) => a + b;

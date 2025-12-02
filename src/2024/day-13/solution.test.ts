@@ -1,6 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { silver, gold } from "./solution";
-import { input } from "./input";
+import { day13 } from "./solution";
 
 const testInput = `Button A: X+94, Y+34
 Button B: X+22, Y+67
@@ -20,14 +19,14 @@ Prize: X=18641, Y=10279`;
 
 describe("December 13", () => {
   test("silver - test input", () => {
-    expect(silver(testInput)).toBe(480);
+    expect(day13.silver(testInput)).toBe(480);
   });
 
-  test("silver - actual puzzle input", () => {
-    expect(silver(input)).toBe(26810);
+  test("silver - actual puzzle input", async () => {
+    expect(day13.silver(await day13.readInput())).toBe(26810);
   });
 
-  test("gold - actual puzzle input", () => {
-    expect(gold(input)).toBe(108713182988244);
+  test("gold - actual puzzle input", async () => {
+    expect(day13.gold(await day13.readInput())).toBe(108713182988244);
   });
 });

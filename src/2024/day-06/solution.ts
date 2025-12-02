@@ -7,9 +7,8 @@ import {
   rotate90,
   shiftPosition,
 } from "@/lib/grid";
-import { input } from "./input";
 
-export const silver = (input: string): number => {
+const silver = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));
   let pos: GridPosition = { row: 0, col: 0 };
   let dir: Direction = "up";
@@ -30,7 +29,7 @@ export const silver = (input: string): number => {
   return grid.flat().filter((c) => c === "X").length;
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));
   let pos: GridPosition = { row: 0, col: 0 };
   let dir: Direction = "up";
@@ -74,7 +73,7 @@ export const gold = (input: string): number => {
   return count;
 };
 
-export const day06 = new AocPuzzle(2024, 6, silver, gold, input);
+export const day06 = new AocPuzzle(2024, 6, silver, gold);
 
 type PathStep = {
   pos: GridPosition;

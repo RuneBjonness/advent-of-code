@@ -1,7 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { input } from "./input";
 
-export const silver = (input: string): string => {
+const silver = (input: string): string => {
   const lines = input.split("\n");
   const registers: Register = {
     a: Number(lines[0].split(": ")[1]),
@@ -14,7 +13,7 @@ export const silver = (input: string): string => {
   return out.join(",");
 };
 
-export const gold = (input: string): number => {
+const gold = (input: string): number => {
   const lines = input.split("\n");
   const registers: Register = {
     a: Number(lines[0].split(": ")[1]),
@@ -63,7 +62,7 @@ export const gold = (input: string): number => {
   );
 };
 
-export const day17 = new AocPuzzle(2024, 17, silver, gold, input);
+export const day17 = new AocPuzzle(2024, 17, silver, gold);
 
 type Register = {
   a: number;
