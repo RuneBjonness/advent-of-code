@@ -1,5 +1,6 @@
 import { parseArgs } from "util";
 import { getPuzzles } from "./puzzle-collection";
+import { AocPuzzle } from "./aoc-puzzle";
 
 const parseYearFilter = (year?: string): number | null => {
   if (!year || year === "*") {
@@ -51,23 +52,26 @@ const { values } = parseArgs({
   allowPositionals: true,
 });
 
-const year = parseYearFilter(values.year);
-const day = parseDayFilter(values.day);
-
-const puzzles = getPuzzles(year, day);
-
-if (puzzles.length === 0) {
-  console.log("No puzzles found");
-} else {
-  const path = puzzles.length === 1 ? values.path : undefined;
-  for (const puzzle of puzzles) {
-    const input = await puzzle.readInput(path);
-    if (values.silver) {
-      puzzle.solvePart("silver", input);
-    } else if (values.gold) {
-      puzzle.solvePart("gold", input);
-    } else {
-      puzzle.solve(input);
+const solvePuzzles = async (puzzles: AocPuzzle[]) => {
+  if (puzzles.length === 0) {
+    console.log("No puzzles found");
+  } else {
+    const path = puzzles.length === 1 ? values.path : undefined;
+    for (const puzzle of puzzles) {
+      const input = await puzzle.readInput(path);
+      if (values.silver) {
+        puzzle.solvePart("silver", input);
+      } else if (values.gold) {
+        puzzle.solvePart("gold", input);
+      } else {
+        puzzle.solve(input);
+      }
     }
   }
-}
+};
+
+const year = parseYearFilter(values.year);
+const day = parseDayFilter(values.day);
+const puzzles = getPuzzles(year, day);
+
+solvePuzzles(puzzles);

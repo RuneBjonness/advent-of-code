@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "bun:test";
 import { day14, safetyFactor } from "./solution";
 
 const testInput = `p=0,4 v=3,-3

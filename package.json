@@ -5,16 +5,12 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "bun run ./src/index.ts",
-    "test": "vitest --ui",
-    "bench": "vitest bench",
     "build:linux": "bun build ./src/index.ts --compile --bytecode --outfile=./build/linux/aoc --target=bun-linux-x64",
     "build:win": "bun build ./src/index.ts --compile --bytecode --outfile=./build/win/aoc.exe --target=bun-windows-x64"
   },
   "author": "Rune Bjønness",
   "license": "ISC",
   "devDependencies": {
-    "@types/bun": "latest",
-    "@vitest/ui": "^2.1.6",
-    "vitest": "^2.1.6"
+    "@types/bun": "latest"
   }
 }

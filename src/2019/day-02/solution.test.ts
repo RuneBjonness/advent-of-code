@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "bun:test";
 import { day02, runIntcode } from "./solution";
 
 const testInput = [1, 1, 1, 4, 99, 5, 6, 0, 99];

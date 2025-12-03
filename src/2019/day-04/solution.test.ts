@@ -1,4 +1,4 @@
-import { expect, test, describe } from "vitest";
+import { expect, test, describe } from "bun:test";
 import { day04 } from "./solution";
 
 describe("December 04", () => {

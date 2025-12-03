@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test } from "bun:test";
 import { day22, nextSecret, nthSecret } from "./solution";
 
 const testInput = `1

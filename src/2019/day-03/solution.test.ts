@@ -1,4 +1,4 @@
-import { expect, test, describe } from "vitest";
+import { expect, test, describe } from "bun:test";
 import { day03 } from "./solution";
 
 const testInput = `R75,D30,R83,U83,L12,D49,R71,U7,L72
