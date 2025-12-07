@@ -115,6 +115,18 @@ export const getPositions = <T>(
     .filter((pos) => pos !== null);
 };
 
+export const getRowPositions = <T>(
+  grid: T[][],
+  rowIndex: number,
+  filter: (val: T) => boolean
+): GridPosition[] => {
+  return grid[rowIndex]
+    .map((cell, colIndex) =>
+      filter(cell) ? { row: rowIndex, col: colIndex } : null
+    )
+    .filter((pos) => pos !== null);
+};
+
 export const distance = (a: GridPosition, b: GridPosition): number => {
   return Math.abs(a.col - b.col) + Math.abs(a.row - b.row);
 };
