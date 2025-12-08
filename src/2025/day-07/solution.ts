@@ -1,22 +1,20 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { getRowPositions } from "@/lib/grid";
 
 const silver = (input: string): number => {
   const grid = input.split("\n").map((x) => x.split(""));
   let splitCount = 0;
 
   for (let row = 1; row < grid.length; row++) {
-    for (const pos of getRowPositions(
-      grid,
-      row - 1,
-      (cell) => cell === "|" || cell === "S"
-    )) {
-      if (grid[row][pos.col] === ".") {
-        grid[row][pos.col] = "|";
-      } else if (grid[row][pos.col] === "^") {
-        grid[row][pos.col - 1] = "|";
-        grid[row][pos.col + 1] = "|";
-        splitCount++;
+    for (let col = 0; col < grid[row].length; col++) {
+      const prev = grid[row - 1][col];
+      if (prev === "|" || prev === "S") {
+        if (grid[row][col] === ".") {
+          grid[row][col] = "|";
+        } else if (grid[row][col] === "^") {
+          grid[row][col - 1] = "|";
+          grid[row][col + 1] = "|";
+          splitCount++;
+        }
       }
     }
   }
@@ -37,12 +35,15 @@ const gold = (input: string): number => {
   );
 
   for (let row = 1; row < grid.length; row++) {
-    for (const pos of getRowPositions(grid, row - 1, (cell) => cell > 0)) {
-      if (grid[row][pos.col] >= 0) {
-        grid[row][pos.col] += grid[row - 1][pos.col];
-      } else if (grid[row][pos.col] === -1) {
-        grid[row][pos.col - 1] += grid[row - 1][pos.col];
-        grid[row][pos.col + 1] += grid[row - 1][pos.col];
+    for (let col = 0; col < grid[row].length; col++) {
+      const prev = grid[row - 1][col];
+      if (prev > 0) {
+        if (grid[row][col] >= 0) {
+          grid[row][col] += prev;
+        } else {
+          grid[row][col - 1] += prev;
+          grid[row][col + 1] += prev;
+        }
       }
     }
   }
