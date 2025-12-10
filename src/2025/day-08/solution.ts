@@ -39,7 +39,51 @@ const gold = (input: string): number => {
   return 0;
 };
 
-export const day08 = new AocPuzzle(2025, 8, silver, gold);
+const both = (input: string): [number, number] => {
+  const positions = parsePositions(input);
+  const distances = calculateDistances(positions);
+  const circuits: Vec3[][] = [];
+
+  let silverResult = 0;
+  let goldResult = 0;
+
+  for (let i = 0; i < distances.length; i++) {
+    const { a, b } = distances[i];
+    if (
+      circuits.some((circuit) => circuit.includes(a) && circuit.includes(b))
+    ) {
+      continue;
+    }
+
+    const circuitWithA = circuits.find((circuit) => circuit.includes(a));
+    const circuitWithB = circuits.find((circuit) => circuit.includes(b));
+
+    if (circuitWithA && circuitWithB) {
+      circuitWithA.push(...circuitWithB);
+      const index = circuits.indexOf(circuitWithB);
+      circuits.splice(index, 1);
+    } else if (circuitWithA) {
+      circuitWithA.push(b);
+    } else if (circuitWithB) {
+      circuitWithB.push(a);
+    } else {
+      circuits.push([a, b]);
+    }
+
+    if (silverResult === 0 && i >= 999) {
+      const circuitSizes = circuits.map((c) => c.length).sort((a, b) => b - a);
+      silverResult = circuitSizes[0] * circuitSizes[1] * circuitSizes[2];
+    }
+
+    if (circuits.length === 1 && circuits[0].length === positions.length) {
+      goldResult = a.x * b.x;
+      break;
+    }
+  }
+  return [silverResult, goldResult];
+};
+
+export const day08 = new AocPuzzle(2025, 8, silver, gold, both);
 
 const parsePositions = (input: string) =>
   input.split("\n").map((x) => {
