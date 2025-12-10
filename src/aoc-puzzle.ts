@@ -1,5 +1,5 @@
 import { file } from "bun";
-export type PuzzlePart = "silver" | "gold";
+export type PuzzlePart = "silver" | "gold" | "both";
 
 export class AocPuzzle {
   private readonly skipParts = new Map<PuzzlePart, string>();
@@ -9,7 +9,8 @@ export class AocPuzzle {
     public readonly year: number,
     public readonly day: number,
     public readonly silver: (input: string) => number | string,
-    public readonly gold: (input: string) => number | string
+    public readonly gold: (input: string) => number | string,
+    public readonly both?: (input: string) => [number | string, number | string]
   ) {
     this.defaultInputPath = `./input/${this.year}_${this.day
       .toString()
@@ -34,7 +35,21 @@ export class AocPuzzle {
       resultValue = this.skipParts.get(part);
     } else {
       performance.mark("start");
-      resultValue = part === "silver" ? this.silver(input) : this.gold(input);
+      if (part === "silver") {
+        resultValue = this.silver(input);
+      } else if (part === "gold") {
+        resultValue = this.gold(input);
+      } else if (part === "both") {
+        let silverResult: number | string;
+        let goldResult: number | string;
+        if (this.both) {
+          [silverResult, goldResult] = this.both(input);
+        } else {
+          silverResult = this.silver(input);
+          goldResult = this.gold(input);
+        }
+        resultValue = `${silverResult}\n${String().padStart(35)}${goldResult}`;
+      }
       performance.mark("end");
 
       if (Number.isNaN(resultValue)) {
@@ -60,5 +75,6 @@ export class AocPuzzle {
   solve(input: string): void {
     this.solvePart("silver", input);
     this.solvePart("gold", input);
+    this.solvePart("both", input);
   }
 }

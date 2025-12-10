@@ -10,13 +10,14 @@ Options:
   -d | --day <day>   | Specify the day (1-25)
      | --silver      | Run only part 1 (the silver star)
      | --gold        | Run only part 2 (the gold star)
+     | --both        | Run both parts (reporting combined time)
   -p | --path <path> | Specify a custom input file path (requires --year and --day to be set)
 
 Examples:
   # Run all solutions for every year and day available:
   > bun run dev
 
-  # Run both parts for day 1, 2025 - using custom input file
+  # Run solutions for silver, gold and both combined for day 1, 2025 - using custom input file
   > bun run dev -y 2025 -d 1 --path ./input/2025_01.txt
 
   # Run silver solution for day 24, 2024

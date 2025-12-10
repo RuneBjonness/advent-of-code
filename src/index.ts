@@ -43,6 +43,9 @@ const { values } = parseArgs({
     gold: {
       type: "boolean",
     },
+    both: {
+      type: "boolean",
+    },
     path: {
       type: "string",
       short: "p",
@@ -63,6 +66,8 @@ const solvePuzzles = async (puzzles: AocPuzzle[]) => {
         puzzle.solvePart("silver", input);
       } else if (values.gold) {
         puzzle.solvePart("gold", input);
+      } else if (values.both) {
+        puzzle.solvePart("both", input);
       } else {
         puzzle.solve(input);
       }
