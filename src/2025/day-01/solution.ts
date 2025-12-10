@@ -27,7 +27,24 @@ const gold = (input: string): number => {
   return countZeros;
 };
 
-export const day01 = new AocPuzzle(2025, 1, silver, gold);
+const both = (input: string): [number, number] => {
+  let countZerosSilver = 0;
+  let countZerosGold = 0;
+  let position = 50;
+
+  const instructions = input.split("\n");
+  for (const instruction of instructions) {
+    const result = rotateAndCountRotations(instruction, position);
+    countZerosGold += result.rotations;
+    position = result.newPosition;
+    if (position === 0) {
+      countZerosSilver++;
+    }
+  }
+  return [countZerosSilver, countZerosGold];
+};
+
+export const day01 = new AocPuzzle(2025, 1, silver, gold, both);
 
 const rotate = (instruction: string, fromPosition: number): number => {
   const dir = instruction[0];
