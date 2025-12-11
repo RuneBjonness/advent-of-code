@@ -27,32 +27,36 @@ export class AocPuzzle {
     return text;
   }
 
-  solvePart(part: PuzzlePart, input: string): void {
-    let resultValue: number | string;
+  solvePart(part: PuzzlePart, input: string, dryRun: boolean): void {
+    let resultValue: number | string = "";
     let duration = "--";
 
     if (this.skipParts.has(part)) {
       resultValue = this.skipParts.get(part);
     } else {
       performance.mark("start");
-      if (part === "silver") {
-        resultValue = this.silver(input);
-      } else if (part === "gold") {
-        resultValue = this.gold(input);
-      } else if (part === "both") {
-        let silverResult: number | string;
-        let goldResult: number | string;
-        if (this.both) {
-          [silverResult, goldResult] = this.both(input);
-        } else {
-          silverResult = this.silver(input);
-          goldResult = this.gold(input);
+      if (!dryRun) {
+        if (part === "silver") {
+          resultValue = this.silver(input);
+        } else if (part === "gold") {
+          resultValue = this.gold(input);
+        } else if (part === "both") {
+          let silverResult: number | string;
+          let goldResult: number | string;
+          if (this.both) {
+            [silverResult, goldResult] = this.both(input);
+          } else {
+            silverResult = this.silver(input);
+            goldResult = this.gold(input);
+          }
+          resultValue = `${silverResult}\n${String().padStart(
+            35
+          )}${goldResult}`;
         }
-        resultValue = `${silverResult}\n${String().padStart(35)}${goldResult}`;
       }
       performance.mark("end");
 
-      if (Number.isNaN(resultValue)) {
+      if (Number.isNaN(resultValue) || resultValue === "") {
         resultValue = "Not solved";
       } else {
         duration = performance
@@ -72,9 +76,9 @@ export class AocPuzzle {
     );
   }
 
-  solve(input: string): void {
-    this.solvePart("silver", input);
-    this.solvePart("gold", input);
-    this.solvePart("both", input);
+  solve(input: string, dryRun: boolean): void {
+    this.solvePart("silver", input, dryRun);
+    this.solvePart("gold", input, dryRun);
+    this.solvePart("both", input, dryRun);
   }
 }

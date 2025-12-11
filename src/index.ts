@@ -50,6 +50,10 @@ const { values } = parseArgs({
       type: "string",
       short: "p",
     },
+    dryrun: {
+      type: "boolean",
+      default: false,
+    },
   },
   strict: true,
   allowPositionals: true,
@@ -63,13 +67,16 @@ const solvePuzzles = async (puzzles: AocPuzzle[]) => {
     for (const puzzle of puzzles) {
       const input = await puzzle.readInput(path);
       if (values.silver) {
-        puzzle.solvePart("silver", input);
-      } else if (values.gold) {
-        puzzle.solvePart("gold", input);
-      } else if (values.both) {
-        puzzle.solvePart("both", input);
-      } else {
-        puzzle.solve(input);
+        puzzle.solvePart("silver", input, values.dryrun);
+      }
+      if (values.gold) {
+        puzzle.solvePart("gold", input, values.dryrun);
+      }
+      if (values.both) {
+        puzzle.solvePart("both", input, values.dryrun);
+      }
+      if (!values.silver && !values.gold && !values.both) {
+        puzzle.solve(input, values.dryrun);
       }
     }
   }

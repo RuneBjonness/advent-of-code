@@ -6,12 +6,13 @@ Advent of code solutions
 > bun run dev [options]
 
 Options:
-  -y | --year <year> | Specify the year (e.g., 2025)
-  -d | --day <day>   | Specify the day (1-25)
-     | --silver      | Run only part 1 (the silver star)
-     | --gold        | Run only part 2 (the gold star)
-     | --both        | Run both parts (reporting combined time)
-  -p | --path <path> | Specify a custom input file path (requires --year and --day to be set)
+  -y  | --year <year> | Specify the year (e.g., 2025)
+  -d  | --day <day>   | Specify the day (1-25)
+      | --silver      | Run part 1 individually (the silver star)
+      | --gold        | Run part 2 individually (the gold star)
+      | --both        | Run both parts combined
+  -p  | --path <path> | Specify a custom input file path (requires --year and --day to be set)
+      | --dryrun      | Run the solution in dry run mode (no actual computation). Useful for measuring overhead.
 
 Examples:
   # Run all solutions for every year and day available:
