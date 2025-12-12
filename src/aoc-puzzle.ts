@@ -1,4 +1,4 @@
-import { file } from "bun";
+import fs from "fs/promises";
 export type PuzzlePart = "silver" | "gold" | "both";
 
 export class AocPuzzle {
@@ -23,7 +23,9 @@ export class AocPuzzle {
   }
 
   async readInput(path?: string): Promise<string> {
-    const text = (await file(path ?? this.defaultInputPath).text()).trimEnd();
+    const text = await fs
+      .readFile(path ?? this.defaultInputPath, "utf-8")
+      .then((data) => data.trimEnd());
     return text;
   }
 

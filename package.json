@@ -5,8 +5,12 @@
   "main": "./src/index.ts",
   "scripts": {
     "dev": "bun run ./src/index.ts",
+    "check": "tsc --noEmit",
+    "bundle": "NODE_ENV=production bun build ./src/index.ts --outfile ./aoc.mjs --target node",
     "build:linux": "bun build ./src/index.ts --compile --bytecode --outfile=./build/linux/aoc --target=bun-linux-x64",
-    "build:win": "bun build ./src/index.ts --compile --bytecode --outfile=./build/win/aoc.exe --target=bun-windows-x64"
+    "build:win": "bun build ./src/index.ts --compile --bytecode --outfile=./build/win/aoc.exe --target=bun-windows-x64",
+    "build:node": "bun check && bun bundle",
+    "preview": "bun build:node && node aoc.mjs"
   },
   "author": "Rune Bjønness",
   "license": "ISC",

@@ -1,4 +1,4 @@
-import { parseArgs } from "util";
+import { parseArgs } from "node:util";
 import { getPuzzles } from "./puzzle-collection";
 import { AocPuzzle } from "./aoc-puzzle";
 
@@ -27,7 +27,7 @@ const parseDayFilter = (day?: string): number | null => {
 };
 
 const { values } = parseArgs({
-  args: Bun.argv,
+  args: process.argv,
   options: {
     year: {
       type: "string",
