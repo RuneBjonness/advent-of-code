@@ -19,11 +19,12 @@ describe("December 09", () => {
     expect(day09.silver(await day09.readInput())).toBe(4740155680);
   });
 
-  // test("gold - test input", () => {
-  //   expect(day09.gold(testInput)).toBe(24);
-  // });
+  test("gold - test input", () => {
+    expect(day09.gold(testInput)).toBe(24);
+  });
 
+  // Takes too long
   // test("gold - actual puzzle input", async () => {
-  //   expect(day09.gold(await day09.readInput())).toBe(0);
+  //   expect(day09.gold(await day09.readInput())).toBe(1543501936);
   // });
 });
