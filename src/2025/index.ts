@@ -23,5 +23,5 @@ export const puzzles2025 = [
   day09,
   day10,
   day11,
-  day12,
+  day12.skip("gold", "There is no part 2"),
 ];
