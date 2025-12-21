@@ -20,16 +20,15 @@ const silver = (input: string): number => {
   return maxArea;
 };
 
-type Range = { min: number; max: number };
-type Edges = Record<number, Range[]>;
+type Edge = { min: number; max: number; index: number };
 
 const gold = (input: string): number => {
   const positions: Vec2[] = input
     .split("\n")
     .map((line) => vec2(...line.split(",").map(Number)));
 
-  const horizontalEdges: Edges = {};
-  const verticalEdges: Edges = {};
+  const horizontalEdges: Edge[] = [];
+  const verticalEdges: Edge[] = [];
 
   let from = positions[0];
   positions.push(from);
@@ -37,23 +36,17 @@ const gold = (input: string): number => {
   for (let i = 1; i < positions.length; i++) {
     const to = positions[i];
     if (from.x === to.x) {
-      const x = from.x;
-      const range = {
+      verticalEdges.push({
         min: Math.min(from.y, to.y),
         max: Math.max(from.y, to.y),
-      };
-      if (!verticalEdges[x]) {
-        verticalEdges[x] = [];
-      }
-      verticalEdges[x].push(range);
+        index: from.x,
+      });
     } else if (from.y === to.y) {
-      const y = from.y;
-      const range = {
+      horizontalEdges.push({
         min: Math.min(from.x, to.x),
         max: Math.max(from.x, to.x),
-      };
-      if (!horizontalEdges[y]) horizontalEdges[y] = [];
-      horizontalEdges[y].push(range);
+        index: from.y,
+      });
     }
     from = to;
   }
@@ -66,48 +59,26 @@ const gold = (input: string): number => {
       const minY = Math.min(positions[a].y, positions[b].y);
       const maxY = Math.max(positions[a].y, positions[b].y);
 
-      let valid = true;
-      for (let y = minY + 1; y < maxY; y++) {
-        const hEdges = horizontalEdges[y];
-        if (hEdges) {
-          for (const edge of hEdges) {
-            if (
-              (edge.min > minX && edge.min < maxX) ||
-              (edge.max > minX && edge.max < maxX) ||
-              (edge.min <= minX && edge.max >= maxX)
-            ) {
-              valid = false;
-              break;
-            }
-          }
-        }
-        if (!valid) break;
+      if (
+        horizontalEdges.some(
+          (e) =>
+            e.index > minY &&
+            e.index < maxY &&
+            (intersects(e, minX + 1) || intersects(e, maxX - 1))
+        ) ||
+        verticalEdges.some(
+          (e) =>
+            e.index > minX &&
+            e.index < maxX &&
+            (intersects(e, minY + 1) || intersects(e, maxY - 1))
+        )
+      ) {
+        continue;
       }
 
-      for (let x = minX + 1; x < maxX; x++) {
-        const vEdges = verticalEdges[x];
-        if (vEdges) {
-          for (const edge of vEdges) {
-            if (
-              (edge.min > minY && edge.min < maxY) ||
-              (edge.max > minY && edge.max < maxY) ||
-              (edge.min <= minY && edge.max >= maxY)
-            ) {
-              valid = false;
-              break;
-            }
-          }
-        }
-        if (!valid) break;
-      }
-
-      if (valid) {
-        const area =
-          (Math.abs(positions[b].x - positions[a].x) + 1) *
-          (Math.abs(positions[b].y - positions[a].y) + 1);
-        if (area > maxArea) {
-          maxArea = area;
-        }
+      const area = (maxX - minX + 1) * (maxY - minY + 1);
+      if (area > maxArea) {
+        maxArea = area;
       }
     }
   }
@@ -115,3 +86,7 @@ const gold = (input: string): number => {
 };
 
 export const day09 = new AocPuzzle(2025, 9, silver, gold);
+
+const intersects = (edge: Edge, p: number): boolean => {
+  return p > edge.min && p < edge.max;
+};
