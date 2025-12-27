@@ -18,7 +18,7 @@ describe("December 10", () => {
     expect(day10.gold(testInput)).toBe(33);
   });
 
-  // test("gold - actual puzzle input", async () => {
-  //   expect(day10.gold(await day10.readInput())).toBe(0);
-  // });
+  test("gold - actual puzzle input", async () => {
+    expect(day10.gold(await day10.readInput())).toBe(17820);
+  });
 });
