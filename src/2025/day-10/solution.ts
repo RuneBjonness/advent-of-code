@@ -5,8 +5,13 @@ const silver = (input: string): number => {
   let result = 0;
   for (const machine of machines) {
     const target = getTarget(machine);
-    const buttons = machine.slice(1, -1).map(getButtonBitmask);
-    const minButtons = minButtonsToTarget(buttons, target);
+    const combinations = calculateButtonCombinations(
+      getButtons(machine),
+      target.length
+    );
+    const minButtons = Math.min(
+      ...combinations[target.join("")].map((c) => c.totalPresses)
+    );
     result += minButtons;
   }
 
@@ -19,7 +24,7 @@ const gold = (input: string): number => {
   for (const machine of machines) {
     const target = getJoltageTarget(machine);
     const combinations = calculateButtonCombinations(
-      machine.slice(1, -1).map(getButton),
+      getButtons(machine),
       target.length
     );
     const minButtons = minimumButtonsToJoltageTarget(target, combinations);
@@ -28,57 +33,48 @@ const gold = (input: string): number => {
   return result;
 };
 
-export const day10 = new AocPuzzle(2025, 10, silver, gold);
-
-const minButtonsToTarget = (
-  buttons: number[],
-  target: number,
-  currentButtons = 0,
-  currentMin = Infinity
-): number => {
-  if (target === 0) {
-    return currentButtons;
-  }
-
-  currentButtons++;
-
-  if (buttons.length === 0 || currentMin <= currentButtons) {
-    return Infinity;
-  }
-
-  const buttonsToConsider = buttons.filter((b) => (b & target) !== 0);
-  for (const button of buttonsToConsider) {
-    const val = minButtonsToTarget(
-      buttons.toSpliced(buttons.indexOf(button), 1),
-      target ^ button,
-      currentButtons,
-      currentMin
+const both = (input: string): [number, number] => {
+  const machines = input.split("\n").map((m) => m.split(" "));
+  let resultSilver = 0;
+  let resultGold = 0;
+  for (const machine of machines) {
+    const lightTarget = getTarget(machine);
+    const joltageTarget = getJoltageTarget(machine);
+    const combinations = calculateButtonCombinations(
+      getButtons(machine),
+      lightTarget.length
     );
-    currentMin = Math.min(currentMin, val);
-  }
 
-  return currentMin;
+    const minButtonsToLightTarget = combinations[lightTarget.join("")]?.reduce(
+      (min, combo) => Math.min(min, combo.totalPresses),
+      Infinity
+    );
+
+    const minButtonsToJoltageTarget = minimumButtonsToJoltageTarget(
+      joltageTarget,
+      combinations
+    );
+    resultSilver += minButtonsToLightTarget;
+    resultGold += minButtonsToJoltageTarget;
+  }
+  return [resultSilver, resultGold];
 };
 
-const getTarget = (machine: string[]): number => {
+export const day10 = new AocPuzzle(2025, 10, silver, gold, both);
+
+const getTarget = (machine: string[]): number[] => {
   return machine[0]
     .slice(1, -1)
     .split("")
-    .reverse()
-    .map((c) => (c === "#" ? 1 : 0))
-    .reduce((acc, bit) => (acc << 1) | bit, 0);
+    .map((c) => (c === "#" ? 1 : 0));
+};
+
+const getButtons = (machine: string[]): number[][] => {
+  return machine.slice(1, -1).map(getButton);
 };
 
 const getButton = (button: string): number[] => {
   return button.slice(1, -1).split(",").map(Number);
-};
-
-const getButtonBitmask = (button: string): number => {
-  return button
-    .slice(1, -1)
-    .split(",")
-    .map((n) => 2 ** Number(n))
-    .reduce((acc, bit) => acc | bit, 0);
 };
 
 const getJoltageTarget = (machine: string[]): number[] => {
