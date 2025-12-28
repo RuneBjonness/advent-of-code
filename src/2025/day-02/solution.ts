@@ -1,77 +1,74 @@
 import { AocPuzzle } from "@/aoc-puzzle";
 
 const silver = (input: string): number => {
-  return sumInvalidIds(input, isInvalidIdPart1);
+  return sumInvalidIds(input, true);
 };
 
 const gold = (input: string): number => {
-  return sumInvalidIds(input, isInvalidIdPart2);
+  return sumInvalidIds(input, false);
 };
 
 export const day02 = new AocPuzzle(2025, 2, silver, gold);
 
-const sumInvalidIds = (
-  input: string,
-  invalidIdFilter: (id: number) => boolean
-): number => {
+const sumInvalidIds = (input: string, justTwoParts?: boolean): number => {
   return input
     .split(",")
     .map((x) => x.split("-").map(Number))
-    .map(([start, end]) => sumInvalidIdsInRange(start, end, invalidIdFilter))
+    .map(([start, end]) => sumInvalidIdsInRange(start, end, justTwoParts))
     .reduce((acc, x) => acc + x, 0);
 };
 
 const sumInvalidIdsInRange = (
   start: number,
   end: number,
-  invalidIdFilter: (id: number) => boolean
+  justTwoParts?: boolean
 ): number => {
   let sum = 0;
-  for (let id = start; id <= end; id++) {
-    if (invalidIdFilter(id)) {
-      sum += id;
+  let numDigits = Math.floor(Math.log10(start)) + 1;
+  const numDigitsEnd = Math.floor(Math.log10(end)) + 1;
+
+  while (numDigits <= numDigitsEnd) {
+    const maxParts = justTwoParts ? 2 : numDigits;
+    const repeatedNumbers: number[] = [];
+    for (let parts = 2; parts <= maxParts; parts++) {
+      if (numDigits % parts !== 0) {
+        continue;
+      }
+      const from = Math.max(start, 10 ** (numDigits - 1));
+      const to = Math.min(end, 10 ** numDigits - 1);
+
+      const numDigitsPerPart = numDigits / parts;
+      const divisor = 10 ** (numDigits - numDigitsPerPart);
+
+      const firstPartStart = Math.floor(from / divisor);
+      const firstPartEnd = Math.floor(to / divisor);
+
+      for (
+        let firstPart = firstPartStart;
+        firstPart <= firstPartEnd;
+        firstPart++
+      ) {
+        const repeatedNumber = constructNumber(firstPart, parts);
+        if (repeatedNumber >= from && repeatedNumber <= to) {
+          if (maxParts > 2 && repeatedNumbers.includes(repeatedNumber)) {
+            continue;
+          }
+          repeatedNumbers.push(repeatedNumber);
+          sum += repeatedNumber;
+        }
+      }
     }
+    numDigits++;
   }
   return sum;
 };
 
-const isInvalidIdPart1 = (id: number): boolean => {
-  const numDigits = Math.floor(Math.log10(id)) + 1;
-  if (numDigits % 2 !== 0) {
-    return false;
+const constructNumber = (repatedPart: number, count: number): number => {
+  let number = 0;
+  let multiplier = 1;
+  for (let i = 0; i < count; i++) {
+    number += repatedPart * multiplier;
+    multiplier *= 10 ** Math.floor(Math.log10(repatedPart) + 1);
   }
-  const divisor = 10 ** (numDigits / 2);
-  const firstHalf = Math.floor(id / divisor);
-  const secondHalf = id % divisor;
-  return firstHalf === secondHalf;
-};
-
-const isRepeated = (id: number, numDigits: number, count: number): boolean => {
-  if (numDigits % count !== 0) {
-    return false;
-  }
-
-  const partLength = numDigits / count;
-  const lastPart = id % 10 ** partLength;
-
-  for (let i = 1; i < count; i++) {
-    const divisor = 10 ** (partLength * i);
-    const currentPart = Math.floor(
-      (id % (divisor * 10 ** partLength)) / divisor
-    );
-    if (lastPart !== currentPart) {
-      return false;
-    }
-  }
-  return true;
-};
-
-const isInvalidIdPart2 = (id: number): boolean => {
-  const numDigits = Math.floor(Math.log10(id)) + 1;
-  for (let count = 2; count <= numDigits; count++) {
-    if (isRepeated(id, numDigits, count)) {
-      return true;
-    }
-  }
-  return false;
+  return number;
 };
