@@ -24,11 +24,11 @@ const sumInvalidIds = (
 const sumInvalidIdsInRange = (
   start: number,
   end: number,
-  invaliIdFilter: (id: number) => boolean
+  invalidIdFilter: (id: number) => boolean
 ): number => {
   let sum = 0;
   for (let id = start; id <= end; id++) {
-    if (invaliIdFilter(id)) {
+    if (invalidIdFilter(id)) {
       sum += id;
     }
   }
@@ -36,22 +36,30 @@ const sumInvalidIdsInRange = (
 };
 
 const isInvalidIdPart1 = (id: number): boolean => {
-  const idStr = id.toString();
-  if (idStr.length % 2 !== 0) {
+  const numDigits = Math.floor(Math.log10(id)) + 1;
+  if (numDigits % 2 !== 0) {
     return false;
   }
-  const halfLength = idStr.length / 2;
-  return idStr.slice(0, halfLength) === idStr.slice(halfLength);
+  const divisor = 10 ** (numDigits / 2);
+  const firstHalf = Math.floor(id / divisor);
+  const secondHalf = id % divisor;
+  return firstHalf === secondHalf;
 };
 
-const isRepeated = (idStr: string, count: number): boolean => {
-  if (idStr.length % count !== 0) {
+const isRepeated = (id: number, numDigits: number, count: number): boolean => {
+  if (numDigits % count !== 0) {
     return false;
   }
-  const partLength = idStr.length / count;
-  const firstPart = idStr.slice(0, partLength);
+
+  const partLength = numDigits / count;
+  const lastPart = id % 10 ** partLength;
+
   for (let i = 1; i < count; i++) {
-    if (firstPart !== idStr.slice(i * partLength, (i + 1) * partLength)) {
+    const divisor = 10 ** (partLength * i);
+    const currentPart = Math.floor(
+      (id % (divisor * 10 ** partLength)) / divisor
+    );
+    if (lastPart !== currentPart) {
       return false;
     }
   }
@@ -59,9 +67,9 @@ const isRepeated = (idStr: string, count: number): boolean => {
 };
 
 const isInvalidIdPart2 = (id: number): boolean => {
-  const idStr = id.toString();
-  for (let count = 2; count <= idStr.length; count++) {
-    if (isRepeated(idStr, count)) {
+  const numDigits = Math.floor(Math.log10(id)) + 1;
+  for (let count = 2; count <= numDigits; count++) {
+    if (isRepeated(id, numDigits, count)) {
       return true;
     }
   }
