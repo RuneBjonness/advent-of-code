@@ -1,12 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import {
-  cell,
-  Direction,
-  distance,
-  getPositions,
-  GridPosition,
-  shiftPosition,
-} from "@/lib/grid";
+import { cell, getPositions } from "@/lib/grid";
+import { distance, GridPosition, shiftPosition } from "@/lib/grid-position";
+import { Direction } from "@/lib/direction";
 
 const silver = (input: string): number => {
   return countCheats(input, 100);

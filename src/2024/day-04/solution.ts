@@ -1,5 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { directions, cells } from "@/lib/grid";
+import { cells } from "@/lib/grid";
+import { directions } from "@/lib/direction";
 
 const silver = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));

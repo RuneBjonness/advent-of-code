@@ -1,12 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import {
-  cell,
-  Direction,
-  GridPosition,
-  isValidPosition,
-  rotate90,
-  shiftPosition,
-} from "@/lib/grid";
+import { cell, isValidPosition } from "@/lib/grid";
+import { GridPosition, shiftPosition } from "@/lib/grid-position";
+import { Direction, rotate90 } from "@/lib/direction";
 
 const silver = (input: string): number => {
   const grid = input.split("\n").map((row) => row.split(""));

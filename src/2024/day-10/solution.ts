@@ -1,5 +1,6 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { cell, getPositions, GridPosition, shiftPosition } from "@/lib/grid";
+import { cell, getPositions } from "@/lib/grid";
+import { GridPosition, shiftPosition } from "@/lib/grid-position";
 
 const silver = (input: string): number => {
   const grid = parseInput(input);

@@ -1,5 +1,7 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { cell, Direction, GridPosition, shiftPosition } from "@/lib/grid";
+import { cell } from "@/lib/grid";
+import { GridPosition, shiftPosition } from "@/lib/grid-position";
+import { Direction } from "@/lib/direction";
 
 const silver = (input: string): number => {
   const grid: Plot[][] = input
