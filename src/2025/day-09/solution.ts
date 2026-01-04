@@ -59,25 +59,25 @@ const gold = (input: string): number => {
       const minY = Math.min(positions[a].y, positions[b].y);
       const maxY = Math.max(positions[a].y, positions[b].y);
 
+      const area = (maxX - minX + 1) * (maxY - minY + 1);
+
       if (
-        horizontalEdges.some(
-          (e) =>
-            e.index > minY &&
-            e.index < maxY &&
-            (intersects(e, minX + 1) || intersects(e, maxX - 1))
-        ) ||
-        verticalEdges.some(
-          (e) =>
-            e.index > minX &&
-            e.index < maxX &&
-            (intersects(e, minY + 1) || intersects(e, maxY - 1))
+        area > maxArea &&
+        !(
+          horizontalEdges.some(
+            (e) =>
+              e.index > minY &&
+              e.index < maxY &&
+              (intersects(e, minX + 1) || intersects(e, maxX - 1))
+          ) ||
+          verticalEdges.some(
+            (e) =>
+              e.index > minX &&
+              e.index < maxX &&
+              (intersects(e, minY + 1) || intersects(e, maxY - 1))
+          )
         )
       ) {
-        continue;
-      }
-
-      const area = (maxX - minX + 1) * (maxY - minY + 1);
-      if (area > maxArea) {
         maxArea = area;
       }
     }
