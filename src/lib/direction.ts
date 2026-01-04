@@ -62,3 +62,21 @@ export const directionVector = (dir: Direction, length = 1): GridPosition => {
       return { row: -length, col: -length };
   }
 };
+
+export const adjacentDeltas: GridPosition[] = [
+  { row: 0, col: 1 }, // right
+  { row: 0, col: -1 }, // left
+  { row: 1, col: 0 }, // down
+  { row: -1, col: 0 }, // up
+];
+
+export const adjacentAndDiagonalDeltas: GridPosition[] = [
+  { row: 0, col: 1 }, // right
+  { row: 0, col: -1 }, // left
+  { row: 1, col: 0 }, // down
+  { row: -1, col: 0 }, // up
+  { row: 1, col: 1 }, // rightDown
+  { row: 1, col: -1 }, // leftDown
+  { row: -1, col: 1 }, // rightUp
+  { row: -1, col: -1 }, // leftUp
+];

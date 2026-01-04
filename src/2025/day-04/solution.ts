@@ -1,16 +1,27 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { cell } from "@/lib/grid";
-import { shiftPosition } from "@/lib/grid-position";
-import { directions } from "@/lib/direction";
+import { Grid } from "@/lib/grid";
+import { adjacentAndDiagonalDeltas } from "@/lib/direction";
+import { ValueGrid } from "@/lib/value-grid";
 
 const silver = (input: string): number => {
-  const grid = input.split("\n").map((row) => row.split(""));
-
+  const grid = ValueGrid.fromInputWithNoMapping(input);
   let count = 0;
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      if (isAccessible(grid, row, col)) {
-        count++;
+  for (let row = 0; row < grid.numRows; row++) {
+    for (let col = 0; col < grid.numCols; col++) {
+      if (grid.getCellUnsafe({ row, col }) === "@") {
+        let adjacentCount = 0;
+        for (const delta of adjacentAndDiagonalDeltas) {
+          const neighbor = { row: row + delta.row, col: col + delta.col };
+          if (grid.getCell(neighbor) === "@") {
+            adjacentCount++;
+            if (adjacentCount >= 4) {
+              break;
+            }
+          }
+        }
+        if (adjacentCount < 4) {
+          count++;
+        }
       }
     }
   }
@@ -18,42 +29,40 @@ const silver = (input: string): number => {
 };
 
 const gold = (input: string): number => {
-  const grid = input.split("\n").map((row) => row.split(""));
-
+  const grid = Grid.fromInput(input, (val) => {
+    return { s: val, adjacentOccupied: -1 };
+  });
   let count = 0;
-  let hasChanged = true;
-  while (hasChanged) {
-    hasChanged = false;
-    for (let row = 0; row < grid.length; row++) {
-      for (let col = 0; col < grid[row].length; col++) {
-        if (isAccessible(grid, row, col)) {
-          count++;
-          grid[row][col] = "x";
-          hasChanged = true;
+
+  let occupiedCells = grid.cells.filter((c) => c.value.s === "@");
+  let occupiedCellsLastPass = occupiedCells.length + 1;
+
+  while (occupiedCells.length < occupiedCellsLastPass) {
+    occupiedCellsLastPass = occupiedCells.length;
+    for (const cell of occupiedCells) {
+      if (cell.value.adjacentOccupied >= 4) {
+        continue;
+      }
+      const adjacentOccupiedCells = grid
+        .getAdjacentCells(cell, true)
+        .filter((c) => c.value.s === "@");
+
+      if (cell.value.adjacentOccupied < 0) {
+        cell.value.adjacentOccupied = adjacentOccupiedCells.length;
+      }
+      if (cell.value.adjacentOccupied < 4) {
+        count++;
+        cell.value.s = "x";
+        for (const adjacentCell of adjacentOccupiedCells) {
+          if (adjacentCell.value.adjacentOccupied > 0) {
+            adjacentCell.value.adjacentOccupied--;
+          }
         }
       }
     }
+    occupiedCells = occupiedCells.filter((c) => c.value.s === "@");
   }
-
   return count;
 };
 
 export const day04 = new AocPuzzle(2025, 4, silver, gold);
-
-const isAccessible = (grid: string[][], row: number, col: number): boolean => {
-  if (grid[row][col] !== "@") {
-    return false;
-  }
-
-  let adjacentCount = 0;
-  for (const dir of directions) {
-    const neighbor = shiftPosition({ row, col }, dir);
-    if (cell(grid, neighbor) === "@") {
-      adjacentCount++;
-      if (adjacentCount >= 4) {
-        return false;
-      }
-    }
-  }
-  return true;
-};
