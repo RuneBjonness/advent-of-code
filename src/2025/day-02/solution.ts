@@ -63,12 +63,14 @@ const sumInvalidIdsInRange = (
   return sum;
 };
 
-const constructNumber = (repatedPart: number, count: number): number => {
+const constructNumber = (repeatedPart: number, count: number): number => {
   let number = 0;
   let multiplier = 1;
+  const baseMultiplier = 10 ** Math.floor(Math.log10(repeatedPart) + 1);
+
   for (let i = 0; i < count; i++) {
-    number += repatedPart * multiplier;
-    multiplier *= 10 ** Math.floor(Math.log10(repatedPart) + 1);
+    number += repeatedPart * multiplier;
+    multiplier *= baseMultiplier;
   }
   return number;
 };

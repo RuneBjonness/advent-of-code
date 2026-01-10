@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { day08, productOfThreeLargestCircuits } from "./solution";
+import { day08, solve } from "./solution";
 
 const testInput = `162,817,812
 57,618,57
@@ -24,7 +24,7 @@ const testInput = `162,817,812
 
 describe("December 08", () => {
   test("silver - test input", () => {
-    expect(productOfThreeLargestCircuits(testInput, 10)).toBe(40);
+    expect(solve(testInput, false, true, 10)[0]).toBe(40);
   });
 
   test("silver - actual puzzle input", async () => {
