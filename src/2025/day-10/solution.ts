@@ -4,17 +4,11 @@ const silver = (input: string): number => {
   const machines = input.split("\n").map((m) => m.split(" "));
   let result = 0;
   for (const machine of machines) {
-    const target = getTarget(machine);
-    const combinations = calculateButtonCombinations(
-      getButtons(machine),
-      target.length
+    result += calculateMinimumButtonPressesForTarget(
+      getTarget(machine),
+      getButtons(machine)
     );
-    const minButtons = Math.min(
-      ...combinations[target.join("")].map((c) => c.totalPresses)
-    );
-    result += minButtons;
   }
-
   return result;
 };
 
@@ -155,4 +149,40 @@ const minimumButtonsToJoltageTarget = (
   }
   targetCache.set(targetCacheKey, currentMin);
   return currentMin;
+};
+
+const calculateMinimumButtonPressesForTarget = (
+  target: number[],
+  buttons: number[][],
+  startIndex: number = 0,
+  currentEffect: number[] = Array.from({ length: target.length }, () => 0),
+  totalPresses: number = 0,
+  minButtons: number = buttons.length
+): number => {
+  if (totalPresses >= minButtons) {
+    return minButtons;
+  }
+
+  if (currentEffect.every((val, idx) => val === target[idx])) {
+    return totalPresses;
+  }
+
+  for (let i = startIndex; i < buttons.length; i++) {
+    const button = buttons[i];
+    const newEffect = [...currentEffect];
+    for (const index of button) {
+      newEffect[index] = newEffect[index] ? 0 : 1;
+    }
+
+    const result = calculateMinimumButtonPressesForTarget(
+      target,
+      buttons,
+      i + 1,
+      newEffect,
+      totalPresses + 1,
+      minButtons
+    );
+    minButtons = Math.min(minButtons, result);
+  }
+  return minButtons;
 };
