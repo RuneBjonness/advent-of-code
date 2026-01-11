@@ -51,6 +51,9 @@ const gold = (input: string): number => {
     from = to;
   }
 
+  verticalEdges.sort((a, b) => a.index - b.index);
+  horizontalEdges.sort((a, b) => a.index - b.index);
+
   let maxArea = 0;
   for (let a = 0; a < positions.length - 1; a++) {
     for (let b = a + 1; b < positions.length; b++) {
@@ -63,20 +66,7 @@ const gold = (input: string): number => {
 
       if (
         area > maxArea &&
-        !(
-          horizontalEdges.some(
-            (e) =>
-              e.index > minY &&
-              e.index < maxY &&
-              (intersects(e, minX + 1) || intersects(e, maxX - 1))
-          ) ||
-          verticalEdges.some(
-            (e) =>
-              e.index > minX &&
-              e.index < maxX &&
-              (intersects(e, minY + 1) || intersects(e, maxY - 1))
-          )
-        )
+        isValidArea(minX, maxX, minY, maxY, horizontalEdges, verticalEdges)
       ) {
         maxArea = area;
       }
@@ -89,4 +79,40 @@ export const day09 = new AocPuzzle(2025, 9, silver, gold);
 
 const intersects = (edge: Edge, p: number): boolean => {
   return p > edge.min && p < edge.max;
+};
+
+const isValidArea = (
+  minX: number,
+  maxX: number,
+  minY: number,
+  maxY: number,
+  horizontalEdges: Edge[],
+  verticalEdges: Edge[]
+): boolean => {
+  let i = horizontalEdges.findIndex((e) => e.index > minY);
+  while (
+    i >= 0 &&
+    i < horizontalEdges.length &&
+    horizontalEdges[i].index < maxY
+  ) {
+    if (
+      intersects(horizontalEdges[i], minX + 1) ||
+      intersects(horizontalEdges[i], maxX - 1)
+    ) {
+      return false;
+    }
+    i++;
+  }
+
+  i = verticalEdges.findIndex((e) => e.index > minX);
+  while (i >= 0 && i < verticalEdges.length && verticalEdges[i].index < maxX) {
+    if (
+      intersects(verticalEdges[i], minY + 1) ||
+      intersects(verticalEdges[i], maxY - 1)
+    ) {
+      return false;
+    }
+    i++;
+  }
+  return true;
 };
