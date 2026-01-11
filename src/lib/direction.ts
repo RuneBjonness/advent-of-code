@@ -42,6 +42,27 @@ export const rotate90 = (dir: Direction): Direction => {
   }
 };
 
+export const rotate90ccw = (dir: Direction): Direction => {
+  switch (dir) {
+    case "right":
+      return "up";
+    case "up":
+      return "left";
+    case "left":
+      return "down";
+    case "down":
+      return "right";
+    case "rightDown":
+      return "rightUp";
+    case "rightUp":
+      return "leftUp";
+    case "leftUp":
+      return "leftDown";
+    case "leftDown":
+      return "rightDown";
+  }
+};
+
 export const directionVector = (dir: Direction, length = 1): GridPosition => {
   switch (dir) {
     case "right":

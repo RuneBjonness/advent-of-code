@@ -1,4 +1,5 @@
 import { puzzles2015 } from "./2015";
+import { puzzles2016 } from "./2016";
 import { puzzles2019 } from "./2019";
 import { puzzles2023 } from "./2023";
 import { puzzles2024 } from "./2024";
@@ -6,6 +7,7 @@ import { puzzles2025 } from "./2025";
 
 const puzzleCollection = [
   ...puzzles2015,
+  ...puzzles2016,
   ...puzzles2019,
   ...puzzles2023,
   ...puzzles2024,
