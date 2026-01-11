@@ -54,12 +54,18 @@ const { values } = parseArgs({
       type: "boolean",
       default: false,
     },
+    summary: {
+      type: "boolean",
+      short: "s",
+      default: false,
+    },
   },
   strict: true,
   allowPositionals: true,
 });
 
 const solvePuzzles = async (puzzles: AocPuzzle[]) => {
+  let totalDurationMs = 0;
   if (puzzles.length === 0) {
     console.log("No puzzles found");
   } else {
@@ -67,18 +73,22 @@ const solvePuzzles = async (puzzles: AocPuzzle[]) => {
     for (const puzzle of puzzles) {
       const input = await puzzle.readInput(path);
       if (values.silver) {
-        puzzle.solvePart("silver", input, values.dryrun);
+        totalDurationMs += puzzle.solvePart("silver", input, values.dryrun);
       }
       if (values.gold) {
-        puzzle.solvePart("gold", input, values.dryrun);
+        totalDurationMs += puzzle.solvePart("gold", input, values.dryrun);
       }
       if (values.both) {
-        puzzle.solvePart("both", input, values.dryrun);
+        totalDurationMs += puzzle.solvePart("both", input, values.dryrun);
       }
       if (!values.silver && !values.gold && !values.both) {
-        puzzle.solve(input, values.dryrun);
+        totalDurationMs += puzzle.solve(input, values.dryrun);
       }
     }
+  }
+  if (values.summary) {
+    console.log("----------------------------------------------------");
+    console.log(`Total duration: ${totalDurationMs.toFixed(1)} ms`);
   }
 };
 

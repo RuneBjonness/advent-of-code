@@ -13,6 +13,7 @@ Options:
       | --both        | Run both parts combined
   -p  | --path <path> | Specify a custom input file path (requires --year and --day to be set)
       | --dryrun      | Run the solution in dry run mode (no actual computation). Useful for measuring overhead.
+  -s  | --summary     | Print a summary
 
 Examples:
   # Run all solutions for every year and day available:

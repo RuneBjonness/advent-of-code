@@ -29,8 +29,9 @@ export class AocPuzzle {
     return text;
   }
 
-  solvePart(part: PuzzlePart, input: string, dryRun: boolean): void {
+  solvePart(part: PuzzlePart, input: string, dryRun: boolean): number {
     let resultValue: number | string = "";
+    let durationMs = 0;
     let duration = "--";
 
     if (this.skipParts.has(part)) {
@@ -61,10 +62,8 @@ export class AocPuzzle {
       if (Number.isNaN(resultValue) || resultValue === "") {
         resultValue = "Not solved";
       } else {
-        duration = performance
-          .measure("solve", "start", "end")
-          .duration.toFixed(1)
-          .concat(" ms");
+        durationMs = performance.measure("solve", "start", "end").duration;
+        duration = durationMs.toFixed(1).concat(" ms");
       }
     }
 
@@ -76,11 +75,14 @@ export class AocPuzzle {
     console.log(
       `${this.year} | ${day} | ${puzzlePart} | ${duration} | ${result}`
     );
+    return durationMs;
   }
 
-  solve(input: string, dryRun: boolean): void {
-    this.solvePart("silver", input, dryRun);
-    this.solvePart("gold", input, dryRun);
-    this.solvePart("both", input, dryRun);
+  solve(input: string, dryRun: boolean): number {
+    let durationMs = 0;
+    durationMs += this.solvePart("silver", input, dryRun);
+    durationMs += this.solvePart("gold", input, dryRun);
+    durationMs += this.solvePart("both", input, dryRun);
+    return durationMs;
   }
 }
