@@ -26,6 +26,6 @@ Examples:
   > bun run dev -y 2024 -d 24 --silver
 ```
 
-This works for the solutions in TypeScript (2019, 2023-2025).
+This works for the solutions in TypeScript (2015-2020, 2023-2025).
 
-2020 (day 20) & 2021 (day 1-19) are in plain JavaScript
+2021 (day 1-19) are in plain JavaScript
