@@ -110,7 +110,6 @@ const secondsToChristmasTree = (
         if (robots[i].pos.x === lastX + 1) {
           count++;
           if (count >= 10) {
-            // log(robots, width, height);
             return seconds;
           }
         } else {
@@ -122,17 +121,4 @@ const secondsToChristmasTree = (
     }
   }
   return -1;
-};
-
-const log = (robots: Robot[], width: number, height: number) => {
-  const grid = Array.from({ length: height }, () =>
-    Array.from({ length: width }, () => ".")
-  );
-
-  robots.forEach((robot) => {
-    grid[robot.pos.y][robot.pos.x] = "#";
-  });
-
-  console.log(grid.map((row) => row.join("")).join("\n"));
-  console.log();
 };

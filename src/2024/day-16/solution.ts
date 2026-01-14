@@ -86,8 +86,6 @@ const gold = (input: string): number => {
     }
   }
 
-  // printMaze(maze);
-
   return getPositions(maze, (x) => x.type === "O").length;
 };
 
@@ -248,6 +246,3 @@ const checkPossibleSourceTiles = (
   }
   return [...directionsToCheck].map((d) => shiftPosition(pos, d));
 };
-
-const printMaze = (maze: MazeCell[][]) =>
-  console.log(maze.map((row) => row.map((x) => x.type).join("")).join("\n"));

@@ -8,7 +8,7 @@ const silver = (input: string): number => {
 
 const gold = (input: string): number => {
   const validInstructions = input.matchAll(
-    /mul\((\d+),(\d+)\)|(do\(\))|(don\'t\(\))/g
+    /mul\((\d+),(\d+)\)|(do\(\))|(don't\(\))/g
   );
   let total = 0;
   let enabled = true;

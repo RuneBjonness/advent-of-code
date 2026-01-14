@@ -151,18 +151,12 @@ const gold = (input: string): number => {
     }
   }
 
-  // logMap(grid);
-
   return getPositions(grid, (x) => x === "[")
     .map(gpsCoordinate)
     .reduce((acc, val) => acc + val, 0);
 };
 
 export const day15 = new AocPuzzle(2024, 15, silver, gold);
-
-const logMap = (m: string[][]): void => {
-  console.log(m.map((row) => row.join("")).join("\n"));
-};
 
 const gpsCoordinate = (pos: GridPosition): number => {
   return pos.row * 100 + pos.col;
