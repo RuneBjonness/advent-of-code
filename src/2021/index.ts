@@ -1,5 +1,6 @@
 import { day01 } from "./day-01/solution";
 import { day02 } from "./day-02/solution";
 import { day03 } from "./day-03/solution";
+import { day04 } from "./day-04/solution";
 
-export const puzzles2021 = [day01, day02, day03];
+export const puzzles2021 = [day01, day02, day03, day04];
