@@ -39,8 +39,6 @@ const silver = (input: string): number => {
     robotPos.col = nextPos.col;
   }
 
-  // logMap(grid);
-
   return getPositions(grid, (x) => x === "O")
     .map(gpsCoordinate)
     .reduce((acc, val) => acc + val, 0);
@@ -65,8 +63,7 @@ const gold = (input: string): number => {
             return x;
         }
       })
-      .map((x) => x.split(""))
-      .flat()
+      .flatMap((x) => x.split("")),
   );
   const robotPos = getPositions(grid, (x) => x === "@")[0];
   const moves = sections[1].replace(/\n/g, "").split("");
@@ -99,8 +96,7 @@ const gold = (input: string): number => {
           break;
         }
         nextRowPositions
-          .map((pos) => getBoxPartPositions(grid, pos))
-          .flat()
+          .flatMap((pos) => getBoxPartPositions(grid, pos))
           .forEach((pos) => {
             if (
               boxPositions.every((x) => x.row !== pos.row || x.col !== pos.col)
@@ -177,7 +173,7 @@ const parseDirection = (dir: string): Direction => {
 
 const getBoxPartPositions = (
   grid: string[][],
-  pos: GridPosition
+  pos: GridPosition,
 ): GridPosition[] => {
   let c = cell(grid, pos);
   if (c === "[") {

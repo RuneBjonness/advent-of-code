@@ -11,7 +11,7 @@ const silver = (input: string): number => {
   return result;
 };
 
-const gold = (input: string): number => {
+const gold = (_input: string): number => {
   return NaN;
 };
 
@@ -53,7 +53,7 @@ const validRegion = (region: Region, shapes: Shape[]): boolean => {
   for (let i = 0; i < region.shapeCounts.length; i++) {
     const shapeArea = shapes[i].reduce(
       (sum, row) => sum + row.filter((cell) => cell).length,
-      0
+      0,
     );
     totalShapeArea += shapeArea * region.shapeCounts[i];
   }

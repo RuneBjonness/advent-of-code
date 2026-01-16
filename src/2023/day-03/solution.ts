@@ -42,7 +42,7 @@ const checkAdjacent = (
   rows: string[],
   row: number,
   colStart: number,
-  colEnd: number
+  colEnd: number,
 ): boolean => {
   for (let r = row - 1; r <= row + 1; r++) {
     if (r < 0 || r >= rows.length) {
@@ -53,9 +53,9 @@ const checkAdjacent = (
       rows[r]
         .substring(
           clamp(colStart - 1, 0, rows[r].length),
-          clamp(colEnd + 1, 0, rows[r].length)
+          clamp(colEnd + 1, 0, rows[r].length),
         )
-        .match(/[^\d\.]/)?.length
+        .match(/[^\d.]/)?.length
     ) {
       return true;
     }

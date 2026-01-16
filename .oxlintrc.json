@@ -1,0 +1,14 @@
+{
+  "plugins": [
+    "oxc",
+    "typescript",
+    "unicorn",
+    "import",
+    "promise",
+  ],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf":"warn"
+  },
+}

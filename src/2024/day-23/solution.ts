@@ -11,7 +11,7 @@ const silver = (input: string): number => {
           if (nodes.get(node3)!.includes(node)) {
             const connectedNodes = [node, node2, node3].sort();
             sets.add(
-              `${connectedNodes[0]}-${connectedNodes[1]}-${connectedNodes[2]}`
+              `${connectedNodes[0]}-${connectedNodes[1]}-${connectedNodes[2]}`,
             );
           }
         }
@@ -35,7 +35,7 @@ const gold = (input: string): string => {
       [key],
       nodes.get(key)!.filter((x) => x > key),
       largestNetwork.length + 1,
-      nodes
+      nodes,
     );
     if (network.length > largestNetwork.length) {
       largestNetwork = network;
@@ -68,7 +68,7 @@ const findLargestNetwork = (
   network: string[],
   sharedNodes: string[],
   minSize: number,
-  nodes: Map<string, string[]>
+  nodes: Map<string, string[]>,
 ): string[] => {
   if (
     sharedNodes.length === 0 ||
@@ -82,7 +82,7 @@ const findLargestNetwork = (
       [...network, n],
       nodes.get(n)!.filter((x) => sharedNodes.includes(x)),
       minSize,
-      nodes
+      nodes,
     );
     if (networkCandidate.length > largestNetwork.length) {
       largestNetwork = networkCandidate;

@@ -15,7 +15,7 @@ const silver = (input: string): number => {
   return count;
 };
 
-const gold = (input: string): number => {
+const gold = (_input: string): number => {
   return NaN;
 };
 
@@ -42,7 +42,7 @@ const columnHeights = (input: string[][]): number[] => {
   for (let col = 0; col < input[0].length; col++) {
     heights[col] = input.reduce(
       (acc, row) => acc + (row[col] === "#" ? 1 : 0),
-      0
+      0,
     );
   }
 
