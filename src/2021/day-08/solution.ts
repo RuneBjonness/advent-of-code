@@ -1,6 +1,4 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { getPositions, isValidPosition } from "@/lib/grid";
-import { GridPosition } from "@/lib/grid-position";
 
 const silver = (input: string): number => {
   let count = 0;

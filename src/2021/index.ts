@@ -7,6 +7,7 @@ import { day06 } from "./day-06/solution";
 import { day07 } from "./day-07/solution";
 import { day08 } from "./day-08/solution";
 import { day09 } from "./day-09/solution";
+import { day10 } from "./day-10/solution";
 
 export const puzzles2021 = [
   day01,
@@ -18,4 +19,5 @@ export const puzzles2021 = [
   day07,
   day08,
   day09,
+  day10,
 ];
