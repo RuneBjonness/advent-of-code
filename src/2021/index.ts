@@ -13,6 +13,7 @@ import { day12 } from "./day-12/solution";
 import { day13 } from "./day-13/solution";
 import { day14 } from "./day-14/solution";
 import { day15 } from "./day-15/solution";
+import { day16 } from "./day-16/solution";
 
 export const puzzles2021 = [
   day01,
@@ -32,4 +33,5 @@ export const puzzles2021 = [
   day15
     .skip("gold", "4-5 minutes execution time")
     .skip("both", "4-5 minutes execution time"),
+  day16,
 ];
