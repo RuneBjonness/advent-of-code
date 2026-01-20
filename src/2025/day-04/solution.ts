@@ -65,11 +65,11 @@ const both = (input: string): [number, number] => {
     }
     goldCount++;
     cell.value.s = "x";
-    const adjacentOccupiedCells = grid
-      .getAdjacentCells(cell, true)
-      .filter((c) => c.value.s === "@");
 
-    for (const adjacentCell of adjacentOccupiedCells) {
+    for (const adjacentCell of grid.getAdjacentCells(cell, true)) {
+      if (adjacentCell.value.s !== "@") {
+        continue;
+      }
       adjacentCell.value.adjacentOccupied--;
       if (adjacentCell.value.adjacentOccupied < 4) {
         toRemove.push(adjacentCell);
