@@ -48,8 +48,7 @@ const both = (input: string): [number, number] => {
       if (grid.cells[idx] === 0) {
         let adjacentCount = 0;
         for (const delta of adjacentAndDiagonalDeltas) {
-          const neighbor = { row: row + delta.row, col: col + delta.col };
-          if (grid.getCellUnsafe(neighbor) >= 0) {
+          if (grid.cells[idx + delta.row * grid.numCols + delta.col] >= 0) {
             adjacentCount++;
           }
         }
