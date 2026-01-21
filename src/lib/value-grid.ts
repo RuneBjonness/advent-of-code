@@ -18,7 +18,7 @@ export class ValueGrid<T = string> {
       this.numCols = cols;
       this.cells = Array.from(
         { length: rowsOrArray * cols },
-        () => initialValue
+        () => initialValue,
       );
     }
   }
@@ -27,20 +27,37 @@ export class ValueGrid<T = string> {
     input: string,
     valueMapper: (val: string) => U,
     rowDelimiter: string = "\n",
-    colDelimiter: string = ""
+    colDelimiter: string = "",
+    borderValue: U | null = null,
   ): ValueGrid<U> {
-    const cols = input.indexOf("\n");
-    const values = input
-      .replaceAll(rowDelimiter, "")
-      .split(colDelimiter)
-      .map(valueMapper);
+    if (borderValue === null) {
+      const cols = input.indexOf("\n");
+      const values = input
+        .replaceAll(rowDelimiter, "")
+        .split(colDelimiter)
+        .map(valueMapper);
+      return new ValueGrid<U>(values, cols);
+    }
+
+    const cols = input.indexOf(rowDelimiter) + 2;
+    const values: U[] = Array<U>(cols).fill(borderValue);
+    const rows = input.split(rowDelimiter);
+    for (const row of rows) {
+      values.push(borderValue);
+      const colsInRow = row.split(colDelimiter);
+      for (const val of colsInRow) {
+        values.push(valueMapper(val));
+      }
+      values.push(borderValue);
+    }
+    values.push(...Array<U>(cols).fill(borderValue));
     return new ValueGrid<U>(values, cols);
   }
 
   static fromInputWithNoMapping(
     input: string,
     rowDelimiter: string = "\n",
-    colDelimiter: string = ""
+    colDelimiter: string = "",
   ): ValueGrid<string> {
     const cols = input.indexOf("\n");
     const values = input.replaceAll(rowDelimiter, "").split(colDelimiter);
@@ -69,7 +86,7 @@ export class ValueGrid<T = string> {
       : adjacentDeltas;
     return deltas
       .map((delta) =>
-        this.getCell({ row: pos.row + delta.row, col: pos.col + delta.col })
+        this.getCell({ row: pos.row + delta.row, col: pos.col + delta.col }),
       )
       .filter((cell): cell is T => cell !== null);
   }

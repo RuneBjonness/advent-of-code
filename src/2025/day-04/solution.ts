@@ -1,5 +1,4 @@
 import { AocPuzzle } from "@/aoc-puzzle";
-import { Grid, GridCell } from "@/lib/grid";
 import { adjacentAndDiagonalDeltas } from "@/lib/direction";
 import { ValueGrid } from "@/lib/value-grid";
 
@@ -28,51 +27,56 @@ const silver = (input: string): number => {
   return count;
 };
 
-type CellValue = {
-  s: string;
-  adjacentOccupied: number;
-};
-
 const gold = (input: string): number => {
   return both(input)[1];
 };
 
 const both = (input: string): [number, number] => {
-  const grid = Grid.fromInput<CellValue>(input, (val) => {
-    return { s: val, adjacentOccupied: -1 };
-  });
+  const grid = ValueGrid.fromInput<number>(
+    input,
+    (val) => (val === "@" ? 0 : -1),
+    "\n",
+    "",
+    -1,
+  );
 
-  let toRemove: GridCell<CellValue>[] = [];
+  let toRemove: number[] = [];
 
-  for (const cell of grid.cells.filter((c) => c.value.s === "@")) {
-    const adjacentOccupiedCells = grid
-      .getAdjacentCells(cell, true)
-      .filter((c) => c.value.s === "@");
-
-    cell.value.adjacentOccupied = adjacentOccupiedCells.length;
-
-    if (cell.value.adjacentOccupied < 4) {
-      toRemove.push(cell);
+  for (let row = 1; row < grid.numRows - 1; row++) {
+    for (let col = 1; col < grid.numCols - 1; col++) {
+      const idx = row * grid.numCols + col;
+      if (grid.cells[idx] === 0) {
+        let adjacentCount = 0;
+        for (const delta of adjacentAndDiagonalDeltas) {
+          const neighbor = { row: row + delta.row, col: col + delta.col };
+          if (grid.getCellUnsafe(neighbor) >= 0) {
+            adjacentCount++;
+          }
+        }
+        if (adjacentCount < 4) {
+          toRemove.push(idx);
+        }
+        grid.cells[idx] = adjacentCount;
+      }
     }
   }
+
   const silverCount = toRemove.length;
   let goldCount = 0;
 
   while (toRemove.length > 0) {
-    const cell = toRemove.pop();
-    if (cell.value.s === "x") {
+    const idx = toRemove.pop();
+    if (grid.cells[idx] < 0) {
       continue;
     }
     goldCount++;
-    cell.value.s = "x";
+    grid.cells[idx] = -1;
 
-    for (const adjacentCell of grid.getAdjacentCells(cell, true)) {
-      if (adjacentCell.value.s !== "@") {
-        continue;
-      }
-      adjacentCell.value.adjacentOccupied--;
-      if (adjacentCell.value.adjacentOccupied < 4) {
-        toRemove.push(adjacentCell);
+    for (const delta of adjacentAndDiagonalDeltas) {
+      const neighborIdx = idx + delta.row * grid.numCols + delta.col;
+      grid.cells[neighborIdx]--;
+      if (grid.cells[neighborIdx] >= 0 && grid.cells[neighborIdx] < 4) {
+        toRemove.push(neighborIdx);
       }
     }
   }
