@@ -5,10 +5,30 @@ const silver = (input: string): number => {
 
   const ranges = rangeSection
     .split("\n")
-    .map((ranges) => ranges.split("-").map(Number) as Range);
-  const ids = idSection.split("\n").map(Number);
+    .map((ranges) => ranges.split("-").map(Number))
+    .sort((a, b) => a[0] - b[0]);
 
-  return ids.filter((id) => isFresh(id, ranges)).length;
+  const ids = idSection
+    .split("\n")
+    .map(Number)
+    .sort((a, b) => a - b);
+
+  let rangeIndex = 0;
+  let count = 0;
+  for (const id of ids) {
+    if (id >= ranges[rangeIndex][0] && id <= ranges[rangeIndex][1]) {
+      count++;
+    } else {
+      while (rangeIndex < ranges.length - 1 && id > ranges[rangeIndex][1]) {
+        rangeIndex++;
+      }
+      if (id >= ranges[rangeIndex][0] && id <= ranges[rangeIndex][1]) {
+        count++;
+      }
+    }
+  }
+
+  return count;
 };
 
 const gold = (input: string): number => {
@@ -16,7 +36,7 @@ const gold = (input: string): number => {
 
   const ranges = rangeSection
     .split("\n")
-    .map((ranges) => ranges.split("-").map(Number) as Range);
+    .map((ranges) => ranges.split("-").map(Number));
 
   ranges.sort((a, b) => a[0] - b[0]);
 
@@ -37,14 +57,3 @@ const gold = (input: string): number => {
 };
 
 export const day05 = new AocPuzzle(2025, 5, silver, gold);
-
-type Range = [number, number];
-
-const isFresh = (id: number, ranges: Range[]): boolean => {
-  for (const [min, max] of ranges) {
-    if (id >= min && id <= max) {
-      return true;
-    }
-  }
-  return false;
-};
